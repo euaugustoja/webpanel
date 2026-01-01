@@ -74,6 +74,8 @@ const config: ForgeConfig = {
     }
   },
   packagerConfig: {
+    name: 'Ferramentas Guru',
+    executableName: 'ferramentas-guru',
     icon: path.resolve(__dirname, 'imgs/icons/icon'),
     extraResource: ['./browsers'],
     asar: {
