@@ -1,0 +1,12 @@
+{
+  "version": "1.1.0",
+  "priority": "high",
+  "releaseDate": "2026-01-02",
+  "changelog": [
+    "⚠️ Correção crítica de segurança",
+    "Correção de vulnerabilidade importante",
+    "Atualização obrigatória para todos os usuários"
+  ],
+  "downloadUrl": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-Setup-1.1.0.exe",
+  "sha256": "opcional-hash-sha256-do-arquivo"
+}

@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Download - Ferramentas Guru</title>
+    <meta
+      name="description"
+      content="Baixe o Ferramentas Guru - O melhor browser anti-detecção multilogin do Brasil"
+    />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --primary: #00d9ff;
+        --primary-dark: #00b8d9;
+        --secondary: #7c3aed;
+        --bg-dark: #0a0a1a;
+        --bg-card: rgba(255, 255, 255, 0.03);
+        --text-primary: #ffffff;
+        --text-secondary: #a0aec0;
+        --gradient-1: linear-gradient(135deg, #00d9ff 0%, #7c3aed 100%);
+        --gradient-2: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      }
+
+      body {
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          sans-serif;
+        background: var(--bg-dark);
+        color: var(--text-primary);
+        min-height: 100vh;
+        overflow-x: hidden;
+      }
+
+      /* Animated Background */
+      .bg-animation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: var(--gradient-2);
+      }
+
+      .bg-animation::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background:
+          radial-gradient(
+            circle at 20% 80%,
+            rgba(0, 217, 255, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 20%,
+            rgba(124, 58, 237, 0.1) 0%,
+            transparent 50%
+          );
+        animation: float 15s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0) rotate(0deg);
+        }
+        50% {
+          transform: translate(-2%, 2%) rotate(5deg);
+        }
+      }
+
+      /* Glowing orbs */
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.5;
+        animation: pulse 8s ease-in-out infinite;
+      }
+
+      .orb-1 {
+        width: 400px;
+        height: 400px;
+        background: rgba(0, 217, 255, 0.3);
+        top: -100px;
+        right: -100px;
+      }
+
+      .orb-2 {
+        width: 300px;
+        height: 300px;
+        background: rgba(124, 58, 237, 0.3);
+        bottom: -50px;
+        left: -50px;
+        animation-delay: 4s;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.5;
+        }
+        50% {
+          transform: scale(1.1);
+          opacity: 0.7;
+        }
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Header */
+      .header {
+        text-align: center;
+        margin-bottom: 60px;
+      }
+
+      .logo {
+        font-size: 3rem;
+        font-weight: 800;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 10px;
+        display: inline-flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .logo-icon {
+        font-size: 3.5rem;
+      }
+
+      .tagline {
+        color: var(--text-secondary);
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+
+      /* Download Card */
+      .download-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 50px;
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .download-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: var(--gradient-1);
+      }
+
+      .os-detected {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: rgba(0, 217, 255, 0.1);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        color: var(--primary);
+        margin-bottom: 30px;
+      }
+
+      .os-icon {
+        font-size: 1.3rem;
+      }
+
+      .download-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+      }
+
+      .version-info {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+      }
+
+      .version-badge {
+        background: rgba(124, 58, 237, 0.2);
+        color: #a78bfa;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        margin-left: 5px;
+      }
+
+      /* Download Button */
+      .download-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: var(--gradient-1);
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 700;
+        padding: 18px 50px;
+        border: none;
+        border-radius: 16px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 40px rgba(0, 217, 255, 0.3);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .download-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s ease;
+      }
+
+      .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 50px rgba(0, 217, 255, 0.4);
+      }
+
+      .download-btn:hover::before {
+        left: 100%;
+      }
+
+      .download-btn:active {
+        transform: translateY(-1px);
+      }
+
+      .download-icon {
+        font-size: 1.4rem;
+      }
+
+      /* File info */
+      .file-info {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 25px;
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+
+      .file-info-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Other downloads */
+      .other-downloads {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .other-downloads-title {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+      }
+
+      .other-downloads-grid {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+
+      .other-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        font-weight: 500;
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .other-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Features */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        margin-top: 60px;
+      }
+
+      .feature-card {
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        transition: all 0.3s ease;
+      }
+
+      .feature-card:hover {
+        border-color: rgba(0, 217, 255, 0.3);
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .feature-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+
+      .feature-desc {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      /* Requirements */
+      .requirements {
+        background: var(--bg-card);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 30px;
+        margin-top: 40px;
+      }
+
+      .requirements-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .requirements-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+      }
+
+      .requirement-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .requirement-icon {
+        color: #22c55e;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        margin-top: 60px;
+        padding-top: 30px;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 15px;
+      }
+
+      .footer-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: var(--primary);
+      }
+
+      /* Loading state */
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .spinner {
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top-color: white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .logo {
+          font-size: 2rem;
+        }
+
+        .logo-icon {
+          font-size: 2.5rem;
+        }
+
+        .download-card {
+          padding: 30px 20px;
+        }
+
+        .download-title {
+          font-size: 1.5rem;
+        }
+
+        .download-btn {
+          width: 100%;
+          padding: 16px 30px;
+          font-size: 1.1rem;
+        }
+
+        .file-info {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .other-downloads-grid {
+          flex-direction: column;
+        }
+
+        .other-btn {
+          width: 100%;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-animation"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="logo">
+          <span class="logo-icon">🔧</span>
+          Ferramentas Guru
+        </h1>
+        <p class="tagline">Browser Anti-Detecção Multilogin Profissional</p>
+      </header>
+
+      <!-- Download Card -->
+      <div class="download-card">
+        <div class="os-detected" id="os-badge">
+          <span class="os-icon" id="os-icon">💻</span>
+          <span id="os-name">Detectando sistema...</span>
+        </div>
+
+        <h2 class="download-title">Baixar Ferramentas Guru</h2>
+
+        <p class="version-info">
+          Última versão <span class="version-badge" id="version">v1.0.0</span>
+        </p>
+
+        <a href="#" class="download-btn" id="download-btn">
+          <span class="download-icon">⬇️</span>
+          <span id="download-text">Baixar Agora</span>
+        </a>
+
+        <div class="file-info">
+          <span class="file-info-item">
+            📦 <span id="file-size">~150 MB</span>
+          </span>
+          <span class="file-info-item"> 🔒 Instalador seguro </span>
+          <span class="file-info-item"> ⚡ Instalação rápida </span>
+        </div>
+      </div>
+
+      <!-- Other Downloads -->
+      <div class="other-downloads">
+        <p class="other-downloads-title">Ou baixe para outro sistema:</p>
+        <div class="other-downloads-grid">
+          <a
+            href="#"
+            class="other-btn"
+            id="btn-windows"
+            onclick="downloadFor('windows')"
+          >
+            <span>🪟</span> Windows
+          </a>
+          <a
+            href="#"
+            class="other-btn"
+            id="btn-mac"
+            onclick="downloadFor('mac')"
+          >
+            <span>🍎</span> macOS
+          </a>
+          <a
+            href="#"
+            class="other-btn"
+            id="btn-linux"
+            onclick="downloadFor('linux')"
+          >
+            <span>🐧</span> Linux
+          </a>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-icon">🛡️</div>
+          <h3 class="feature-title">Anti-Detecção Avançada</h3>
+          <p class="feature-desc">
+            Fingerprint único para cada perfil, evitando detecção e banimentos.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <h3 class="feature-title">Múltiplos Perfis</h3>
+          <p class="feature-desc">
+            Gerencie dezenas de perfis simultaneamente com total isolamento.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3 class="feature-title">Atualização Automática</h3>
+          <p class="feature-desc">
+            Sempre na última versão com atualizações automáticas.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">☁️</div>
+          <h3 class="feature-title">Sincronização na Nuvem</h3>
+          <p class="feature-desc">
+            Seus perfis sincronizados em qualquer dispositivo.
+          </p>
+        </div>
+      </div>
+
+      <!-- Requirements -->
+      <div class="requirements">
+        <h3 class="requirements-title">
+          <span>📋</span> Requisitos do Sistema
+        </h3>
+        <div class="requirements-grid">
+          <div class="requirement-item">
+            <span class="requirement-icon">✓</span>
+            Windows 10/11 ou macOS 10.15+
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-icon">✓</span>
+            4GB RAM (8GB recomendado)
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-icon">✓</span>
+            500MB espaço em disco
+          </div>
+          <div class="requirement-item">
+            <span class="requirement-icon">✓</span>
+            Conexão com internet
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-links">
+          <a href="https://ferramentasguru.com">Site</a>
+          <a href="mailto:suporte@ferramentasguru.com">Suporte</a>
+          <a href="#">Termos de Uso</a>
+          <a href="#">Política de Privacidade</a>
+        </div>
+        <p>© 2026 Ferramentas Guru. Todos os direitos reservados.</p>
+      </footer>
+    </div>
+
+    <script>
+      // ========================================
+      // CONFIGURAÇÃO - EDITE AQUI
+      // ========================================
+      const CONFIG = {
+        version: "1.0.0",
+        downloads: {
+          windows:
+            "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-Setup-1.0.0.exe",
+          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.0.zip",
+          linux:
+            "https://membros.ferramentasguru.com/updates/ferramentas-guru-1.0.0.deb",
+        },
+        sizes: {
+          windows: "~150 MB",
+          mac: "~160 MB",
+          linux: "~145 MB",
+        },
+      };
+      // ========================================
+
+      // Detectar sistema operacional
+      function detectOS() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const platform = navigator.platform.toLowerCase();
+
+        if (platform.includes("win") || userAgent.includes("windows")) {
+          return "windows";
+        } else if (platform.includes("mac") || userAgent.includes("mac")) {
+          return "mac";
+        } else if (platform.includes("linux") || userAgent.includes("linux")) {
+          return "linux";
+        }
+        return "windows"; // Default
+      }
+
+      // Atualizar UI baseado no OS
+      function updateUI(os) {
+        const osNames = {
+          windows: "Windows Detectado",
+          mac: "macOS Detectado",
+          linux: "Linux Detectado",
+        };
+
+        const osIcons = {
+          windows: "🪟",
+          mac: "🍎",
+          linux: "🐧",
+        };
+
+        const downloadTexts = {
+          windows: "Baixar para Windows",
+          mac: "Baixar para macOS",
+          linux: "Baixar para Linux",
+        };
+
+        // Atualizar elementos
+        document.getElementById("os-name").textContent = osNames[os];
+        document.getElementById("os-icon").textContent = osIcons[os];
+        document.getElementById("download-text").textContent =
+          downloadTexts[os];
+        document.getElementById("download-btn").href = CONFIG.downloads[os];
+        document.getElementById("version").textContent = "v" + CONFIG.version;
+        document.getElementById("file-size").textContent = CONFIG.sizes[os];
+
+        // Destacar botão do OS atual
+        document.querySelectorAll(".other-btn").forEach((btn) => {
+          btn.style.opacity = "0.6";
+        });
+        document.getElementById("btn-" + os).style.opacity = "1";
+        document.getElementById("btn-" + os).style.borderColor =
+          "rgba(0, 217, 255, 0.5)";
+      }
+
+      // Download para OS específico
+      function downloadFor(os) {
+        window.location.href = CONFIG.downloads[os];
+      }
+
+      // Buscar versão do servidor (opcional)
+      async function fetchLatestVersion() {
+        try {
+          const response = await fetch(
+            "https://membros.ferramentasguru.com/updates/latest.json"
+          );
+          if (response.ok) {
+            const data = await response.json();
+            CONFIG.version = data.version;
+            if (data.downloadUrl) {
+              CONFIG.downloads.windows = data.downloadUrl;
+            }
+            document.getElementById("version").textContent =
+              "v" + CONFIG.version;
+          }
+        } catch (e) {
+          console.log("Using default version");
+        }
+      }
+
+      // Inicialização
+      document.addEventListener("DOMContentLoaded", () => {
+        const detectedOS = detectOS();
+        updateUI(detectedOS);
+        fetchLatestVersion();
+      });
+    </script>
+  </body>
+</html>

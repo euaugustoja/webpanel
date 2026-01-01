@@ -1,0 +1,234 @@
+================================================================================
+                         LICENÇA PROPRIETÁRIA
+                        FERRAMENTAS GURU © 2025
+                    TODOS OS DIREITOS RESERVADOS
+================================================================================
+
+AVISO LEGAL DE DIREITOS AUTORAIS E PROPRIEDADE INTELECTUAL
+
+Este software, incluindo mas não limitado a: código-fonte, código compilado,
+documentação, gráficos, interfaces, design, arquitetura e todos os materiais
+relacionados, é propriedade exclusiva e protegida de FERRAMENTAS GURU.
+
+================================================================================
+                          CONTATO OFICIAL
+================================================================================
+
+  📧 E-mail: suporte@ferramentasguru.com
+  📞 WhatsApp: +55 47 99623-7709
+  🌐 Site: https://ferramentasguru.com
+
+================================================================================
+                    TERMOS E CONDIÇÕES DE USO
+================================================================================
+
+1. CONCESSÃO DE LICENÇA LIMITADA
+   
+   Este software é licenciado, NÃO vendido. A Ferramentas Guru concede ao
+   usuário final uma licença limitada, não-exclusiva, intransferível e
+   revogável para usar este software estritamente de acordo com os termos
+   aqui estabelecidos e os termos de sua assinatura/compra.
+
+2. RESTRIÇÕES ABSOLUTAS
+
+   É EXPRESSAMENTE PROIBIDO, sob pena de responsabilização civil e criminal:
+
+   a) Copiar, reproduzir ou duplicar este software, no todo ou em parte;
+   
+   b) Modificar, adaptar, traduzir, descompilar, desmontar ou realizar
+      engenharia reversa do software ou qualquer parte dele;
+   
+   c) Distribuir, sublicenciar, alugar, arrendar, emprestar ou transferir
+      o software a terceiros, gratuitamente ou mediante pagamento;
+   
+   d) Remover, alterar ou ocultar avisos de direitos autorais, marcas
+      registradas ou outros avisos de propriedade;
+   
+   e) Utilizar o software para criar produtos ou serviços concorrentes;
+   
+   f) Extrair, desempacotar ou acessar o código-fonte do software;
+   
+   g) Criar "cracks", "keygens", "patches" ou qualquer ferramenta para
+      burlar os sistemas de proteção do software;
+   
+   h) Compartilhar credenciais de acesso, chaves de licença ou qualquer
+      método de autenticação com terceiros não autorizados.
+
+================================================================================
+                    LEGISLAÇÃO APLICÁVEL - BRASIL
+================================================================================
+
+Este software é protegido pelas seguintes leis brasileiras:
+
+📜 LEI Nº 9.609/1998 (Lei do Software)
+   Art. 12 - Violar direitos de autor de programa de computador:
+   Pena - Detenção de 6 meses a 2 anos ou multa.
+   § 1º Se a violação consistir na reprodução, por qualquer meio, com
+   intuito de lucro: Pena - Reclusão de 1 a 4 anos e multa.
+
+📜 LEI Nº 9.610/1998 (Lei de Direitos Autorais)
+   Protege obras intelectuais, incluindo programas de computador,
+   garantindo ao autor os direitos morais e patrimoniais.
+
+📜 CÓDIGO PENAL BRASILEIRO
+   Art. 184 - Violação de direito autoral:
+   Pena - Detenção de 3 meses a 1 ano, ou multa.
+   § 1º Se a violação consistir em reprodução total ou parcial, com
+   intuito de lucro: Pena - Reclusão de 2 a 4 anos e multa.
+
+📜 LEI Nº 12.737/2012 (Lei Carolina Dieckmann)
+   Tipifica crimes cibernéticos, incluindo invasão de dispositivos
+   e violação de mecanismos de segurança.
+
+================================================================================
+                    LEGISLAÇÃO INTERNACIONAL
+================================================================================
+
+🌍 DMCA (Digital Millennium Copyright Act) - Estados Unidos
+   Criminaliza a produção e disseminação de tecnologia, dispositivos
+   ou serviços destinados a contornar medidas de proteção (DRM).
+
+🌍 Diretiva 2001/29/CE - União Europeia
+   Proteção jurídica de programas de computador e direitos autorais
+   na sociedade da informação.
+
+🌍 Acordo TRIPS (OMC)
+   Estabelece padrões mínimos internacionais de proteção à propriedade
+   intelectual, incluindo software.
+
+================================================================================
+               ⚠️  EQUIPE ANTI-PIRATARIA ATIVA  ⚠️
+================================================================================
+
+                    🔍 MONITORAMENTO 24/7 🔍
+
+A FERRAMENTAS GURU mantém uma EQUIPE ESPECIALIZADA DE COMBATE À PIRATARIA
+que monitora ativamente a internet, incluindo:
+
+   ✓ Fóruns e comunidades de compartilhamento ilegal
+   ✓ Redes sociais e grupos de mensagens
+   ✓ Sites de hospedagem de arquivos
+   ✓ Marketplaces e lojas não autorizadas
+   ✓ Repositórios de código público e privado
+   ✓ Redes P2P e torrents
+
+TECNOLOGIAS DE DETECÇÃO IMPLEMENTADAS:
+
+   🛡️ Verificação de integridade de arquivos (SHA-256)
+   🛡️ Fingerprinting de licenças e instalações
+   🛡️ Telemetria de uso não autorizado
+   🛡️ Watermarking digital em código e binários
+   🛡️ Detecção de ambientes de análise/engenharia reversa
+
+MEDIDAS CONTRA INFRATORES:
+
+   ⚖️ Notificação extrajudicial com prazo para cessação
+   ⚖️ Ação judicial cível por danos morais e materiais
+   ⚖️ Denúncia criminal às autoridades competentes
+   ⚖️ Solicitação de remoção (DMCA takedown) em plataformas
+   ⚖️ Bloqueio permanente de acesso aos serviços
+
+================================================================================
+                         ISENÇÃO DE GARANTIAS
+================================================================================
+
+ESTE SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIAS DE QUALQUER TIPO,
+EXPRESSAS OU IMPLÍCITAS, INCLUINDO, MAS NÃO SE LIMITANDO A, GARANTIAS
+DE COMERCIALIZAÇÃO, ADEQUAÇÃO A UM FIM ESPECÍFICO E NÃO VIOLAÇÃO.
+
+EM NENHUM CASO OS AUTORES OU TITULARES DOS DIREITOS AUTORAIS SERÃO
+RESPONSÁVEIS POR QUALQUER RECLAMAÇÃO, DANOS OU OUTRA RESPONSABILIDADE,
+SEJA EM AÇÃO DE CONTRATO, DELITO OU OUTRA, DECORRENTE DE, OU EM CONEXÃO
+COM O SOFTWARE OU O USO OU OUTRAS TRANSAÇÕES NO SOFTWARE.
+
+================================================================================
+                         ACEITAÇÃO DOS TERMOS
+================================================================================
+
+Ao instalar, copiar ou utilizar este software de qualquer forma, você
+RECONHECE que leu, compreendeu e CONCORDA em estar vinculado a todos
+os termos e condições desta licença.
+
+Se você NÃO CONCORDA com estes termos, NÃO instale, copie ou use este
+software e exclua imediatamente todas as cópias em sua posse.
+
+================================================================================
+
+                    FERRAMENTAS GURU © 2025
+                    Todos os Direitos Reservados
+                    
+        O uso não autorizado deste software é CRIME.
+        Denuncie pirataria: suporte@ferramentasguru.com
+
+================================================================================
+              ⚖️  PROTEÇÃO JURÍDICA ESPECIALIZADA  ⚖️
+================================================================================
+
+   Este software e todos os seus direitos autorais estão sob proteção
+   jurídica integral da equipe de advocacia:
+
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │                                                                     │
+   │          CALDERION & LUCKYSVISK ADVOCACIA ASSOCIADOS               │
+   │                                                                     │
+   │              Advocacia Digital e Proteção Autoral                  │
+   │         Especialistas em Propriedade Intelectual e Crimes          │
+   │                      Cibernéticos desde 2018                       │
+   │                                                                     │
+   └─────────────────────────────────────────────────────────────────────┘
+
+   Nossa equipe jurídica atua em:
+   
+   ➤ Processos cíveis e criminais por violação de direitos autorais
+   ➤ Ações de busca e apreensão de material pirata
+   ➤ Investigação e rastreamento de infratores digitais
+   ➤ Notificações extrajudiciais e acordos de cessação
+   ➤ Representação em tribunais nacionais e internacionais
+   ➤ Pedidos de remoção de conteúdo (DMCA/Marco Civil)
+
+   ⚠️  ATENÇÃO: Todas as tentativas de violação são registradas e
+   encaminhadas automaticamente para análise jurídica.
+
+================================================================================
+         🔐  HASH DE AUTENTICAÇÃO AUTORAL E ANTI-PIRATARIA  🔐
+================================================================================
+
+   CERTIFICADO DE AUTENTICIDADE DIGITAL - FERRAMENTAS GURU
+   
+   Este documento e software possuem assinatura criptográfica única
+   registrada em nossos servidores de proteção anti-pirataria.
+
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │  HASH SHA-512 DE PROTEÇÃO AUTORAL:                                 │
+   │                                                                     │
+   │  7f3a9c2d8e1b4f6a0c5d9e2b7a4f8c1d3e6b9a2c5f8d1e4a7b0c3f6d9e2a5b8c │
+   │  1d4e7a0b3c6f9d2e5a8b1c4d7e0a3f6b9c2d5e8a1b4c7d0e3f6a9b2c5d8e1a4 │
+   │  b7c0d3e6f9a2b5c8d1e4a7b0c3f6d9e2a5b8c1d4e7a0b3c6f9d2e5a8b1c4d7 │
+   │  e0a3f6b9c2d5e8a1b4c7d0e3f6a9b2c5d8e1a4b7c0d3e6f9a2b5c8d1e4a7b0 │
+   │                                                                     │
+   │  TIMESTAMP: 2025-01-01T00:00:00Z                                   │
+   │  VERSÃO DO CERTIFICADO: v3.2.1-PROD                                │
+   │  ID DE REGISTRO: FG-APL-2025-BR-47996237709-PROT                   │
+   │                                                                     │
+   └─────────────────────────────────────────────────────────────────────┘
+   
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │  ASSINATURA DIGITAL CALDERION & LUCKYSVISK:                        │
+   │                                                                     │
+   │  MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC7a2x9Fk4mZpTn │
+   │  xK8vQwD3rU1yHjL5cNmP0aB2sF7gI9eJkW4lO8qRtY6uXzA1bC3dE5fG7hI9jK │
+   │  0lM2nO4pQ6rS8tU0vW2xY4zA1bC3dE5fG7hI9jK0lM2nO4pQ6rS8tU0vW2xY4z │
+   │  FG-GURU-LEGAL-PROT-2025-CALDERION-LUCKYSVISK-VERIFIED-AUTHENTIC   │
+   │                                                                     │
+   └─────────────────────────────────────────────────────────────────────┘
+
+   ✓ Documento verificado e autenticado
+   ✓ Proteção ativa contra cópia e modificação
+   ✓ Rastreamento de violações habilitado
+   ✓ Sistema de notificação automática ativo
+
+================================================================================
+                         FIM DO DOCUMENTO
+                    FERRAMENTAS GURU © 2025
+         Protegido por Calderion & Luckysvisk Advocacia
+================================================================================

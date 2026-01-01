@@ -1,0 +1,31 @@
+# Dependências
+node_modules/
+
+# Build outputs (arquivos grandes!)
+out/
+.vite/
+
+# Browsers (Chromium - muito grande para GitHub!)
+# Será baixado automaticamente pelo postinstall
+browsers/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Vercel
+.vercel/
+
+# Temp
+*.tmp
+*.temp

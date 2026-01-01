@@ -1,0 +1,114 @@
+# Build Automático Multi-Plataforma
+# Gera instaladores para Windows, macOS e Linux usando GitHub Actions
+
+name: Build Installers
+
+on:
+  # Roda quando você criar uma tag de versão (ex: v1.0.0)
+  push:
+    tags:
+      - "v*"
+
+  # Ou manualmente pelo GitHub
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versão para build (ex: 1.0.0)"
+        required: true
+        default: "1.0.0"
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          # Windows
+          - os: windows-latest
+            platform: windows
+            extension: exe
+          # macOS
+          - os: macos-latest
+            platform: mac
+            extension: zip
+          # Linux
+          - os: ubuntu-latest
+            platform: linux
+            extension: deb
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: launcher/package-lock.json
+
+      - name: 📚 Instalar dependências
+        working-directory: ./launcher
+        run: npm ci
+
+      - name: 🔨 Build do aplicativo
+        working-directory: ./launcher
+        run: npm run make
+        env:
+          # Força build mesmo sem assinatura
+          CSC_IDENTITY_AUTO_DISCOVERY: false
+
+      - name: 📤 Upload Windows Installer
+        if: matrix.platform == 'windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ferramentas-Guru-Setup-Windows
+          path: launcher/out/make/squirrel.windows/x64/*.exe
+          retention-days: 30
+
+      - name: 📤 Upload macOS Installer
+        if: matrix.platform == 'mac'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ferramentas-Guru-macOS
+          path: launcher/out/make/zip/darwin/**/*.zip
+          retention-days: 30
+
+      - name: 📤 Upload Linux Installer
+        if: matrix.platform == 'linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Ferramentas-Guru-Linux
+          path: |
+            launcher/out/make/deb/x64/*.deb
+            launcher/out/make/rpm/x64/*.rpm
+          retention-days: 30
+
+  # Job para criar Release no GitHub (opcional)
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - name: 📥 Download todos os artefatos
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: 📋 Listar arquivos
+        run: find artifacts -type f -name "*" | head -20
+
+      - name: 🚀 Criar Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.zip
+            artifacts/**/*.deb
+            artifacts/**/*.rpm
+          draft: true
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
