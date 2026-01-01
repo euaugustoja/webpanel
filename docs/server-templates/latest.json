@@ -5,10 +5,11 @@
   "changelog": [
     "Sistema de atualização automática",
     "Melhorias de performance",
-    "Correções de bugs 3"
+    "Suporte para macOS Intel e Apple Silicon"
   ],
   "downloads": {
-    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.1.exe",
-    "mac": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.1-mac.zip"
+    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.3.exe",
+    "mac": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac.zip",
+    "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac-intel.zip"
   }
 }
