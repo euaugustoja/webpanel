@@ -64,24 +64,37 @@ const createWindow = () => {
 
 // Verificação de integridade no startup
 app.on('ready', () => {
-  // Verificar integridade antes de criar a janela
-  const isValid = verifyIntegrity();
-  
-  if (!isValid) {
-    const violations = getIntegrityViolations();
-    const message = violations.length > 0
-      ? `Os seguintes arquivos foram modificados:\n\n• ${violations.join('\n• ')}\n\nPor segurança, a aplicação não pode ser executada.`
-      : 'A aplicação detectou modificações não autorizadas e não pode ser executada.';
+  try {
+    // Verificar integridade antes de criar a janela
+    const isValid = verifyIntegrity();
     
-    dialog.showErrorBox(
-      '⚠️ Erro de Integridade - Ferramentas Guru',
-      message
-    );
+    if (!isValid) {
+      const violations = getIntegrityViolations();
+      const message = violations.length > 0
+        ? `Os seguintes arquivos foram modificados:\n\n• ${violations.join('\n• ')}\n\nPor segurança, a aplicação não pode ser executada.`
+        : 'A aplicação detectou modificações não autorizadas e não pode ser executada.';
+      
+      dialog.showErrorBox(
+        '⚠️ Erro de Integridade - Ferramentas Guru',
+        message
+      );
+      app.quit();
+      return;
+    }
+  } catch (error) {
+    // Se houver erro na verificação de integridade, log e continua
+    console.error('[START] Erro na verificação de integridade:', error);
+    // Em caso de erro, permite iniciar para não bloquear o usuário
+  }
+
+  try {
+    createWindow();
+  } catch (error) {
+    console.error('[START] Erro ao criar janela:', error);
+    dialog.showErrorBox('Erro', `Falha ao iniciar: ${error}`);
     app.quit();
     return;
   }
-
-  createWindow();
 
   // Iniciar verificação de atualizações após 3 segundos
   initAutoUpdater(pkg.version, mainWindow, 3000);
