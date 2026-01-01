@@ -1,11 +1,11 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.3",
   "priority": "high",
   "releaseDate": "2026-01-01",
   "changelog": [
     "Sistema de atualização automática",
     "Melhorias de performance",
-    "Correções de bugs"
+    "Correções de bugs 3"
   ],
   "downloads": {
     "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.1.exe",
