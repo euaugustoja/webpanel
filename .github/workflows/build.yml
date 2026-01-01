@@ -20,6 +20,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           # Windows
@@ -46,14 +47,12 @@ jobs:
         with:
           node-version: "20"
           cache: "npm"
-          cache-dependency-path: launcher/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: 📚 Instalar dependências
-        working-directory: ./launcher
         run: npm ci
 
       - name: 🔨 Build do aplicativo
-        working-directory: ./launcher
         run: npm run make
         env:
           # Força build mesmo sem assinatura
@@ -64,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Ferramentas-Guru-Setup-Windows
-          path: launcher/out/make/squirrel.windows/x64/*.exe
+          path: out/make/squirrel.windows/x64/*.exe
           retention-days: 30
 
       - name: 📤 Upload macOS Installer
@@ -72,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Ferramentas-Guru-macOS
-          path: launcher/out/make/zip/darwin/**/*.zip
+          path: out/make/zip/darwin/**/*.zip
           retention-days: 30
 
       - name: 📤 Upload Linux Installer
@@ -81,8 +80,8 @@ jobs:
         with:
           name: Ferramentas-Guru-Linux
           path: |
-            launcher/out/make/deb/x64/*.deb
-            launcher/out/make/rpm/x64/*.rpm
+            out/make/deb/x64/*.deb
+            out/make/rpm/x64/*.rpm
           retention-days: 30
 
   # Job para criar Release no GitHub (opcional)
