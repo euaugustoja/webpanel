@@ -94,11 +94,13 @@ const config: ForgeConfig = {
     // LINUX
     new MakerRpm({
       options: {
+        bin: 'Ferramentas Guru',
         icon: path.resolve(__dirname, 'imgs/icons/icon.png'),
       }
     }),
     new MakerDeb({
       options: {
+        bin: 'Ferramentas Guru',
         icon: path.resolve(__dirname, 'imgs/icons/icon.png'),
       }
     }),
