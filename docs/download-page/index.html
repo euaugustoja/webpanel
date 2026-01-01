@@ -564,7 +564,15 @@
             id="btn-mac"
             onclick="downloadFor('mac')"
           >
-            <span>🍎</span> macOS
+            <span>🍎</span> macOS (Apple Silicon)
+          </a>
+          <a
+            href="#"
+            class="other-btn"
+            id="btn-mac-intel"
+            onclick="downloadFor('mac-intel')"
+          >
+            <span>🍎</span> macOS (Intel)
           </a>
           <span
             class="other-btn"
@@ -651,16 +659,18 @@
       // CONFIGURAÇÃO - EDITE AQUI
       // ========================================
       const CONFIG = {
-        version: "1.0.1",
+        version: "1.0.3",
         downloads: {
           windows:
-            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.1.exe",
-          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.1-mac.zip",
+            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.3.exe",
+          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac.zip",
+          "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac-intel.zip",
           linux: null, // Em breve
         },
         sizes: {
           windows: "~150 MB",
           mac: "~160 MB",
+          "mac-intel": "~160 MB",
           linux: "Em breve",
         },
       };
