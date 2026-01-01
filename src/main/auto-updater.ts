@@ -339,11 +339,21 @@ async function showDownloadProgress(
  * Instala a atualização baixada
  */
 async function installUpdate(filePath: string): Promise<void> {
-  // Abrir o instalador e fechar o app
+  console.log('[AutoUpdater] Abrindo instalador:', filePath);
+  
+  // Mostrar mensagem para o usuário
+  dialog.showMessageBox({
+    type: 'info',
+    title: 'Instalando Atualização',
+    message: 'O instalador será aberto agora.\n\nClique em "Instalar" quando a janela aparecer.\n\nO aplicativo será fechado para permitir a atualização.',
+    buttons: ['OK']
+  });
+  
+  // Abrir o instalador
   shell.openPath(filePath);
   
   // Aguardar um pouco para o instalador iniciar
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
   
   // Fechar o aplicativo para permitir a atualização
   app.quit();

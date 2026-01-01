@@ -1,14 +1,14 @@
 {
   "version": "1.0.1",
-  "priority": "low",
+  "priority": "high",
   "releaseDate": "2026-01-01",
   "changelog": [
-    "Lançamento inicial",
-    "Sistema de atualização automática"
+    "Sistema de atualização automática",
+    "Melhorias de performance",
+    "Correções de bugs"
   ],
   "downloads": {
-    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-Setup-1.0.1.exe",
-    "mac": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.1-mac.zip",
-    "linux": "https://membros.ferramentasguru.com/updates/ferramentas-guru-1.0.1.deb"
+    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.1.exe",
+    "mac": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.1-mac.zip"
   }
 }

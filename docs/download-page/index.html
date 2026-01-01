@@ -566,14 +566,14 @@
           >
             <span>🍎</span> macOS
           </a>
-          <a
-            href="#"
+          <span
             class="other-btn"
             id="btn-linux"
-            onclick="downloadFor('linux')"
+            style="opacity: 0.5; cursor: not-allowed;"
+            title="Em breve"
           >
-            <span>🐧</span> Linux
-          </a>
+            <span>🐧</span> Linux (Em breve)
+          </span>
         </div>
       </div>
 
@@ -651,18 +651,17 @@
       // CONFIGURAÇÃO - EDITE AQUI
       // ========================================
       const CONFIG = {
-        version: "1.0.0",
+        version: "1.0.1",
         downloads: {
           windows:
-            "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-Setup-1.0.0.exe",
-          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.0.zip",
-          linux:
-            "https://membros.ferramentasguru.com/updates/ferramentas-guru-1.0.0.deb",
+            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.1.exe",
+          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.1-mac.zip",
+          linux: null, // Em breve
         },
         sizes: {
           windows: "~150 MB",
           mac: "~160 MB",
-          linux: "~145 MB",
+          linux: "Em breve",
         },
       };
       // ========================================
@@ -734,11 +733,18 @@
           if (response.ok) {
             const data = await response.json();
             CONFIG.version = data.version;
-            if (data.downloadUrl) {
-              CONFIG.downloads.windows = data.downloadUrl;
+            if (data.downloads) {
+              if (data.downloads.windows) CONFIG.downloads.windows = data.downloads.windows;
+              if (data.downloads.mac) CONFIG.downloads.mac = data.downloads.mac;
+              if (data.downloads.linux) CONFIG.downloads.linux = data.downloads.linux;
             }
             document.getElementById("version").textContent =
               "v" + CONFIG.version;
+            // Atualizar o link do botão principal
+            const detectedOS = detectOS();
+            if (CONFIG.downloads[detectedOS]) {
+              document.getElementById("download-btn").href = CONFIG.downloads[detectedOS];
+            }
           }
         } catch (e) {
           console.log("Using default version");
