@@ -14,6 +14,14 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onAppClosed: (callback: (event: any, id: string) => void) =>
     ipcRenderer.on('app-closed', callback),
 
+  // Ouve quando o plano é bloqueado (expirado, suspenso, sem plano)
+  onPlanBlocked: (callback: (event: any, data: { reason: string, message: string, plan_status: string }) => void) =>
+    ipcRenderer.on('plan-blocked', callback),
+
+  // Ouve quando a sessão expira (token inválido)
+  onSessionExpired: (callback: (event: any) => void) =>
+    ipcRenderer.on('session-expired', callback),
+
   // Abre a pasta do download
   openDownloadFolder: (path: string) => ipcRenderer.invoke('downloads:open-folder', path)
 });

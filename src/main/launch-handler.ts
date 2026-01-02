@@ -95,6 +95,7 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
       custom_user_agent = '',
       selected_scripts_content = [],
       selected_element_rules_content = [],
+      blocked_links = [],
     } = args;
 
     const normalizeInput = (input: any): string[] => {
@@ -132,7 +133,6 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
       '--enforce-webrtc-ip-permission-check',
       // Forçar uso apenas de proxy para conexões
       '--proxy-bypass-list=<-loopback>',
-      '--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE localhost',
       // Desabilitar UDP (WebRTC usa UDP para leak)
       '--disable-quic',
       '--no-first-run',
@@ -604,6 +604,181 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
           }
         }
       }
+
+      // LINKS BLOQUEADOS pelo perfil (com página de aviso estilizada)
+      const normalizedBlockedLinks = normalizeInput(blocked_links);
+      if (normalizedBlockedLinks && normalizedBlockedLinks.length > 0) {
+        for (const raw of normalizedBlockedLinks) {
+          try {
+            const pattern = raw.trim();
+            if (!pattern) continue;
+
+            let clean = pattern;
+            if (clean.includes('://')) clean = clean.split('://')[1];
+            if (clean.startsWith('www.')) clean = clean.substring(4);
+
+            const escaped = clean.replace(/[.+^${}()|[\]\\]/g, '\\$&');
+            let regexString: string;
+            if (clean.includes('*')) {
+              regexString = `^https?://(www\\.)?${escaped.replace(/\\*/g, '.*')}`;
+            } else {
+              regexString = `^https?://([a-zA-Z0-9-]+\\.)*${escaped}(/.*)?$`;
+            }
+
+            const routeRegex = new RegExp(regexString, 'i');
+            await context.route(routeRegex, async (route) => {
+              const blockedUrl = route.request().url();
+              
+              // Whitelist: não bloquear domínios de autenticação
+              const authWhitelist = [
+                'accounts.google.com',
+                'accounts.youtube.com',
+                'login.microsoftonline.com',
+                'appleid.apple.com',
+                'www.facebook.com/login',
+                'api.twitter.com/oauth',
+                'github.com/login',
+              ];
+              
+              if (authWhitelist.some(domain => blockedUrl.includes(domain))) {
+                return route.continue();
+              }
+              
+              if (IS_DEV) console.log(`🚫 [BLOCKED-LINK] ${blockedUrl}`);
+              
+              // Página de bloqueio estilizada
+              const blockPage = `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                  <meta charset="UTF-8">
+                  <title>Acesso Bloqueado</title>
+                  <style>
+                    * { margin: 0; padding: 0; box-sizing: border-box; }
+                    body {
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+                      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+                      color: #fff;
+                      display: flex;
+                      flex-direction: column;
+                      align-items: center;
+                      justify-content: center;
+                      min-height: 100vh;
+                      text-align: center;
+                      padding: 20px;
+                    }
+                    .container {
+                      max-width: 500px;
+                      background: rgba(255, 255, 255, 0.05);
+                      backdrop-filter: blur(10px);
+                      border-radius: 24px;
+                      padding: 48px 40px;
+                      border: 1px solid rgba(255, 107, 107, 0.3);
+                      box-shadow: 0 25px 80px rgba(255, 107, 107, 0.15);
+                    }
+                    .icon {
+                      font-size: 72px;
+                      margin-bottom: 24px;
+                      animation: shake 0.5s ease-in-out;
+                    }
+                    @keyframes shake {
+                      0%, 100% { transform: translateX(0); }
+                      25% { transform: translateX(-5px); }
+                      75% { transform: translateX(5px); }
+                    }
+                    h1 {
+                      font-size: 28px;
+                      font-weight: 700;
+                      margin-bottom: 16px;
+                      color: #ff6b6b;
+                    }
+                    .url-box {
+                      background: rgba(255, 107, 107, 0.15);
+                      border: 1px solid rgba(255, 107, 107, 0.4);
+                      padding: 12px 20px;
+                      border-radius: 12px;
+                      margin: 20px 0;
+                      font-family: monospace;
+                      font-size: 13px;
+                      word-break: break-all;
+                      color: #ff9999;
+                    }
+                    .message {
+                      font-size: 16px;
+                      color: #a0a0a0;
+                      line-height: 1.6;
+                      margin-bottom: 24px;
+                    }
+                    .warning {
+                      background: linear-gradient(135deg, rgba(255, 193, 7, 0.15), rgba(255, 107, 107, 0.15));
+                      border: 1px solid rgba(255, 193, 7, 0.4);
+                      border-radius: 12px;
+                      padding: 16px 20px;
+                      margin-top: 24px;
+                    }
+                    .warning-icon { font-size: 24px; margin-bottom: 8px; }
+                    .warning-text {
+                      font-size: 14px;
+                      color: #ffc107;
+                      font-weight: 600;
+                    }
+                    .warning-sub {
+                      font-size: 12px;
+                      color: #ffcc66;
+                      margin-top: 4px;
+                    }
+                    .btn {
+                      display: inline-block;
+                      background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+                      color: white;
+                      border: none;
+                      padding: 14px 32px;
+                      border-radius: 12px;
+                      font-size: 15px;
+                      font-weight: 600;
+                      cursor: pointer;
+                      transition: all 0.3s ease;
+                      text-decoration: none;
+                      margin-top: 20px;
+                    }
+                    .btn:hover {
+                      transform: translateY(-2px);
+                      box-shadow: 0 10px 30px rgba(108, 92, 231, 0.4);
+                    }
+                  </style>
+                </head>
+                <body>
+                  <div class="container">
+                    <div class="icon">🚫</div>
+                    <h1>Acesso Bloqueado</h1>
+                    <div class="url-box">${blockedUrl}</div>
+                    <p class="message">
+                      Este site foi bloqueado pelo administrador.<br>
+                      Você não tem permissão para acessar este conteúdo.
+                    </p>
+                    <div class="warning">
+                      <div class="warning-icon">⚠️</div>
+                      <div class="warning-text">ATENÇÃO</div>
+                      <div class="warning-sub">Tentativas repetidas de acesso a sites bloqueados podem resultar em banimento da conta.</div>
+                    </div>
+                    <a href="javascript:history.back()" class="btn">← Voltar</a>
+                  </div>
+                </body>
+                </html>
+              `;
+
+              await route.fulfill({
+                status: 403,
+                contentType: 'text/html',
+                body: blockPage,
+              });
+            });
+          } catch (e) {
+            if (IS_DEV) console.error(`⚠️ Erro na regra blocked_links "${raw}":`, e);
+          }
+        }
+        if (IS_DEV) console.log(`🚫 [BLOCKED-LINKS] ${normalizedBlockedLinks.length} link(s) bloqueado(s)`);
+      }
     }
 
     // SCRIPT DE INJEÇÃO (PROTEÇÃO DE SENHAS, WEBRTC, SPOOFING)
@@ -909,11 +1084,34 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
     };
 
     const setupPage = async (p: Page) => {
+      // Skip setup if page is already closed (e.g., Google popup that closes quickly)
+      if (p.isClosed()) {
+        if (IS_DEV) console.log('[CDP] Página já fechada, pulando setup');
+        return;
+      }
+
       setupDownloadHandler(p);
 
       if (!is_debug) {
         try {
-          const client = await p.context().newCDPSession(p);
+          // Para popups (about:blank), esperar a navegação real antes de setup
+          const currentUrl = p.url();
+          if (currentUrl === 'about:blank') {
+            if (IS_DEV) console.log('[CDP] Popup detectado (about:blank), aguardando navegação...');
+            // Esperar até 5 segundos pela navegação real, mas não bloquear
+            await Promise.race([
+              p.waitForNavigation({ waitUntil: 'commit', timeout: 5000 }).catch(() => {}),
+              new Promise(resolve => setTimeout(resolve, 500)) // Timeout mínimo de 500ms
+            ]);
+            // Re-check if page is still open after wait
+            if (p.isClosed()) return;
+          }
+          
+          const client = await p.context().newCDPSession(p).catch(() => null);
+          if (!client) {
+            if (IS_DEV) console.log('[CDP] Não foi possível criar sessão para página, pulando...');
+            return;
+          }
           await client.send('Page.enable').catch(() => { });
           await client.send('Network.enable').catch(() => { });
           await client.send('Runtime.enable').catch(() => { });
@@ -1247,6 +1445,151 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
     // SESSION SAVING
     let lastGoodSessionData: any = contextOptions.storageState || null;
 
+    // FORCE CLOSE DETECTION - Polls API every 10 seconds to check if admin requested remote close
+    let forceCloseInterval: NodeJS.Timeout | null = null;
+    const checkForceClose = async () => {
+      try {
+        const token = args.token; // Token should be passed from web panel
+        const apiBaseUrl = args.api_base_url || ''; // API base URL from web panel
+        if (!token || !args.id) return;
+
+        const response = await fetch(`${apiBaseUrl}/api/profiles/${args.id}/check-force-close`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.should_close) {
+            if (IS_DEV) console.log(`🚨 [FORCE-CLOSE] Perfil será fechado remotamente por solicitação de admin`);
+            
+            // Limpar interval para não checar novamente
+            if (forceCloseInterval) {
+              clearInterval(forceCloseInterval);
+              forceCloseInterval = null;
+            }
+
+            // Salvar sessão antes de fechar
+            await tryCaptureSession('force-close');
+
+            // Limpar sessão ativa no servidor
+            try {
+              await fetch(`${apiBaseUrl}/api/profiles/active-sessions`, {
+                method: 'DELETE',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({ profile_id: args.id }),
+              });
+            } catch (e) {
+              if (IS_DEV) console.error('Erro ao limpar sessão ativa:', e);
+            }
+
+            // Fechar navegador
+            if (browser && browser.isConnected()) {
+              await browser.close().catch(() => {});
+            }
+          }
+        }
+      } catch (e) {
+        // Falha silenciosa - não interromper uso normal
+        if (IS_DEV) console.error('[FORCE-CLOSE] Erro ao verificar:', e);
+      }
+    };
+
+    // Iniciar polling a cada 10 segundos
+    if (args.token && args.id) {
+      forceCloseInterval = setInterval(checkForceClose, 10000);
+      if (IS_DEV) console.log('🔄 [FORCE-CLOSE] Monitoramento iniciado (10s)');
+    }
+
+    // PLAN VALIDATION - Polls API every 30 seconds to check if user's plan is still valid
+    let planCheckInterval: NodeJS.Timeout | null = null;
+    const checkPlanStatus = async () => {
+      try {
+        const token = args.token;
+        const apiBaseUrl = args.api_base_url || '';
+        if (!token) return;
+
+        const response = await fetch(`${apiBaseUrl}/api/user/plan-status`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.should_block) {
+            if (IS_DEV) console.log(`🚨 [PLAN-CHECK] Plano inválido: ${data.block_reason} - ${data.message}`);
+            
+            // Limpar intervals
+            if (planCheckInterval) {
+              clearInterval(planCheckInterval);
+              planCheckInterval = null;
+            }
+            if (forceCloseInterval) {
+              clearInterval(forceCloseInterval);
+              forceCloseInterval = null;
+            }
+
+            // Salvar sessão antes de fechar
+            await tryCaptureSession('plan-expired');
+
+            // Enviar mensagem para UI mostrar tela de bloqueio
+            if (mainWindow && !mainWindow.isDestroyed()) {
+              mainWindow.webContents.send('plan-blocked', {
+                reason: data.block_reason,
+                message: data.message,
+                plan_status: data.plan_status
+              });
+            }
+
+            // Fechar navegador
+            if (browser && browser.isConnected()) {
+              await browser.close().catch(() => {});
+            }
+          }
+        } else if (response.status === 401) {
+          // Token inválido - sessão expirada
+          if (IS_DEV) console.log('🚨 [PLAN-CHECK] Token inválido - sessão expirada');
+          
+          if (planCheckInterval) {
+            clearInterval(planCheckInterval);
+            planCheckInterval = null;
+          }
+          if (forceCloseInterval) {
+            clearInterval(forceCloseInterval);
+            forceCloseInterval = null;
+          }
+
+          // Enviar mensagem para UI fazer logout
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('session-expired');
+          }
+
+          // Fechar navegador
+          if (browser && browser.isConnected()) {
+            await browser.close().catch(() => {});
+          }
+        }
+      } catch (e) {
+        // Falha silenciosa - não interromper uso normal
+        if (IS_DEV) console.error('[PLAN-CHECK] Erro ao verificar:', e);
+      }
+    };
+
+    // Iniciar polling de plano a cada 30 segundos
+    if (args.token) {
+      planCheckInterval = setInterval(checkPlanStatus, 30000);
+      // Fazer uma verificação inicial após 5 segundos
+      setTimeout(checkPlanStatus, 5000);
+      if (IS_DEV) console.log('🔄 [PLAN-CHECK] Monitoramento de plano iniciado (30s)');
+    }
+
     const tryCaptureSession = async (reason: string) => {
       if (save_strategy === 'never') return;
       if (!context || !browser || !browser.isConnected()) return;
@@ -1268,10 +1611,30 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
 
     await new Promise<void>((resolve) => {
       page.on('close', async () => {
+        // Limpar força-fechamento e plano-check se ainda estiver ativo
+        if (forceCloseInterval) {
+          clearInterval(forceCloseInterval);
+          forceCloseInterval = null;
+        }
+        if (planCheckInterval) {
+          clearInterval(planCheckInterval);
+          planCheckInterval = null;
+        }
         await tryCaptureSession('page-close');
         resolve();
       });
-      browser?.on('disconnected', () => resolve());
+      browser?.on('disconnected', () => {
+        // Limpar intervalos se ainda estiverem ativos
+        if (forceCloseInterval) {
+          clearInterval(forceCloseInterval);
+          forceCloseInterval = null;
+        }
+        if (planCheckInterval) {
+          clearInterval(planCheckInterval);
+          planCheckInterval = null;
+        }
+        resolve();
+      });
     });
 
     await tryCaptureSession('final-check');
