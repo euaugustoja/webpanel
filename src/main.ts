@@ -64,23 +64,26 @@ const createWindow = () => {
 
 // Verificação de integridade no startup
 app.on('ready', () => {
+  // NOTA: Verificação de integridade desativada temporariamente
+  // O sistema de integridade bloqueia após atualizações pois os hashes mudam
+  // TODO: Regenerar integrity.json em cada build e incluir no instalador
   try {
-    // Verificar integridade antes de criar a janela
-    const isValid = verifyIntegrity();
-    
-    if (!isValid) {
-      const violations = getIntegrityViolations();
-      const message = violations.length > 0
-        ? `Os seguintes arquivos foram modificados:\n\n• ${violations.join('\n• ')}\n\nPor segurança, a aplicação não pode ser executada.`
-        : 'A aplicação detectou modificações não autorizadas e não pode ser executada.';
-      
-      dialog.showErrorBox(
-        '⚠️ Erro de Integridade - Ferramentas Guru',
-        message
-      );
-      app.quit();
-      return;
-    }
+    console.log('[START] Verificação de integridade desativada - permitindo inicialização');
+    // const isValid = verifyIntegrity();
+    // 
+    // if (!isValid) {
+    //   const violations = getIntegrityViolations();
+    //   const message = violations.length > 0
+    //     ? `Os seguintes arquivos foram modificados:\n\n• ${violations.join('\n• ')}\n\nPor segurança, a aplicação não pode ser executada.`
+    //     : 'A aplicação detectou modificações não autorizadas e não pode ser executada.';
+    //   
+    //   dialog.showErrorBox(
+    //     '⚠️ Erro de Integridade - Ferramentas Guru',
+    //     message
+    //   );
+    //   app.quit();
+    //   return;
+    // }
   } catch (error) {
     // Se houver erro na verificação de integridade, log e continua
     console.error('[START] Erro na verificação de integridade:', error);

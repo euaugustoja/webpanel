@@ -73,7 +73,7 @@ SERVER_VERSION=$(echo "$LATEST_JSON" | grep -o '"version"[[:space:]]*:[[:space:]
 
 if [ -z "$SERVER_VERSION" ]; then
     echo -e "  ${CYAN}!${NC} Não foi possível verificar atualizações"
-    SERVER_VERSION="1.0.3"
+    SERVER_VERSION="1.0.4"
 fi
 
 echo -e "  ${CYAN}▸${NC} Versão disponível: ${WHITE}$SERVER_VERSION${NC}"

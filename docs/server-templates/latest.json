@@ -1,15 +1,17 @@
 {
-  "version": "1.0.3",
+  "version": "1.0.4",
   "priority": "high",
-  "releaseDate": "2026-01-01",
+  "releaseDate": "2026-01-02",
   "changelog": [
     "Sistema de atualização automática",
     "Melhorias de performance",
-    "Suporte para macOS Intel e Apple Silicon"
+    "Suporte para macOS Intel e Apple Silicon",
+    "Correções de WebRTC e proxy",
+    "Novo sistema de force close"
   ],
   "downloads": {
-    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.3.exe",
-    "mac": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac.zip",
-    "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac-intel.zip"
+    "windows": "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.4.exe",
+    "mac": "https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command",
+    "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.4-mac-intel.zip"
   }
 }

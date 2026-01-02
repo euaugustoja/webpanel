@@ -502,6 +502,166 @@
           justify-content: center;
         }
       }
+
+      /* Modal Popup */
+      .modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal {
+        background: var(--gradient-2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 35px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        font-size: 1.5rem;
+        cursor: pointer;
+        transition: color 0.3s ease;
+      }
+
+      .modal-close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .modal-section {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 15px;
+      }
+
+      .modal-section-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: var(--text-primary);
+      }
+
+      .modal-text {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.7;
+        margin-bottom: 10px;
+      }
+
+      .modal-code {
+        background: #0a0a1a;
+        border: 1px solid rgba(0, 217, 255, 0.2);
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-family: 'Monaco', 'Menlo', monospace;
+        font-size: 0.75rem;
+        color: #00d9ff;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-break: break-all;
+      }
+
+      .modal-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: var(--gradient-1);
+        color: white;
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 14px 30px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .modal-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+      }
+
+      .modal-btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .modal-btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+
+      .copy-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        background: rgba(0, 217, 255, 0.2);
+        border: 1px solid rgba(0, 217, 255, 0.3);
+        color: var(--primary);
+        font-size: 0.8rem;
+        padding: 8px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+      }
+
+      .copy-btn:hover {
+        background: rgba(0, 217, 255, 0.3);
+      }
+
+      .warning-box {
+        background: rgba(255, 193, 7, 0.1);
+        border: 1px solid rgba(255, 193, 7, 0.3);
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 15px;
+      }
+
+      .warning-box p {
+        color: #ffc107;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+      }
     </style>
   </head>
   <body>
@@ -562,7 +722,7 @@
             href="#"
             class="other-btn"
             id="btn-mac"
-            onclick="downloadFor('mac')"
+            onclick="showMacInstallerPopup(); return false;"
           >
             <span>🍎</span> macOS (Apple Silicon)
           </a>
@@ -654,27 +814,87 @@
       </footer>
     </div>
 
+    <!-- Modal para macOS Apple Silicon -->
+    <div class="modal-overlay" id="mac-modal">
+      <div class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        
+        <h3 class="modal-title">🍎 Instalação macOS (Apple Silicon)</h3>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">📥 Opção 1: Instalador Automático (Recomendado)</h4>
+          <p class="modal-text">Clique no botão abaixo para baixar o instalador automático. Após o download, clique duas vezes no arquivo para iniciar a instalação.</p>
+          <a href="https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command" class="modal-btn" download>
+            ⬇️ Baixar Instalador Automático
+          </a>
+        </div>
+        
+        <div class="modal-section">
+          <h4 class="modal-section-title">🔧 Opção 2: Instalação Manual</h4>
+          <p class="modal-text">Se o instalador automático não funcionar, siga estes passos:</p>
+          <p class="modal-text"><strong>1.</strong> Baixe o arquivo ZIP:</p>
+          <a href="https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.4-mac.zip" class="modal-btn modal-btn-secondary" download>
+            📦 Baixar ZIP Manual
+          </a>
+          <p class="modal-text" style="margin-top: 15px;"><strong>2.</strong> Coloque o arquivo na pasta Downloads e execute este comando no Terminal:</p>
+          <div class="modal-code">xattr -cr ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\ Guru.app /Applications/ && open /Applications/Ferramentas\ Guru.app</div>
+          <button class="copy-btn" onclick="copyCommand()">📋 Copiar Comando</button>
+        </div>
+        
+        <div class="warning-box">
+          <p>⚠️ <strong>Importante:</strong> Se aparecer uma mensagem de segurança, vá em Configurações do Sistema → Privacidade e Segurança → e clique em "Abrir Mesmo Assim".</p>
+        </div>
+      </div>
+    </div>
+
     <script>
       // ========================================
       // CONFIGURAÇÃO - EDITE AQUI
       // ========================================
       const CONFIG = {
-        version: "1.0.3",
+        version: "1.0.4",
         downloads: {
           windows:
-            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.3.exe",
-          mac: "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac.zip",
-          "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.3-mac-intel.zip",
+            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.4.exe",
+          mac: "https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command",
+          "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.4-mac-intel.zip",
           linux: null, // Em breve
         },
         sizes: {
           windows: "~150 MB",
-          mac: "~160 MB",
+          mac: "~2 KB (Instalador)",
           "mac-intel": "~160 MB",
           linux: "Em breve",
         },
       };
       // ========================================
+
+      // Funções do Modal
+      function showMacInstallerPopup() {
+        document.getElementById('mac-modal').classList.add('active');
+      }
+
+      function closeModal() {
+        document.getElementById('mac-modal').classList.remove('active');
+      }
+
+      function copyCommand() {
+        const command = 'xattr -cr ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\\ Guru.app /Applications/ && open /Applications/Ferramentas\\ Guru.app';
+        navigator.clipboard.writeText(command).then(() => {
+          const btn = document.querySelector('.copy-btn');
+          btn.textContent = '✅ Copiado!';
+          setTimeout(() => {
+            btn.textContent = '📋 Copiar Comando';
+          }, 2000);
+        });
+      }
+
+      // Fechar modal ao clicar fora
+      document.getElementById('mac-modal').addEventListener('click', function(e) {
+        if (e.target === this) {
+          closeModal();
+        }
+      });
 
       // Detectar sistema operacional
       function detectOS() {
