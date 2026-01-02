@@ -120,10 +120,21 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
     // LANÇAR NAVEGADOR - Argumentos otimizados para performance
     const launchArgs = [
       '--start-maximized',
+      // WebRTC LEAK PROTECTION - Bloqueia vazamento de IP
       '--disable-webrtc',
-      '--disable-features=WebRTC,WebRtcHideLocalIpsWithMdns',
+      '--disable-features=WebRTC,WebRtcHideLocalIpsWithMdns,WebRtcUseEchoCanceller3',
       '--force-webrtc-ip-handling-policy=disable_non_proxied_udp',
       '--disable-blink-features=WebRTC',
+      '--disable-webrtc-hw-encoding',
+      '--disable-webrtc-hw-decoding',
+      '--disable-webrtc-encryption',
+      '--disable-webrtc-hw-vp8-encoding',
+      '--enforce-webrtc-ip-permission-check',
+      // Forçar uso apenas de proxy para conexões
+      '--proxy-bypass-list=<-loopback>',
+      '--host-resolver-rules=MAP * ~NOTFOUND , EXCLUDE localhost',
+      // Desabilitar UDP (WebRTC usa UDP para leak)
+      '--disable-quic',
       '--no-first-run',
       '--no-default-browser-check',
       '--disable-background-networking',
@@ -701,28 +712,105 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
         setInterval(() => applyMarker(), 1000);
       }
 
-      // WEBRTC BLOCKING
+      // WEBRTC BLOCKING - Proteção completa contra vazamento de IP
       try {
-        const noop = function() {
+        // Bloqueia RTCPeerConnection completamente
+        const fakeRTCPeerConnection = function(config) {
+          console.log('[GURU] WebRTC blocked');
           return {
-            createOffer: () => new Promise(() => {}),
-            createAnswer: () => new Promise(() => {}),
+            createOffer: () => Promise.reject(new Error('WebRTC disabled')),
+            createAnswer: () => Promise.reject(new Error('WebRTC disabled')),
             setLocalDescription: () => Promise.resolve(),
+            setRemoteDescription: () => Promise.resolve(),
+            addIceCandidate: () => Promise.resolve(),
+            getConfiguration: () => ({}),
             close: () => {},
             addEventListener: () => {},
             removeEventListener: () => {},
+            dispatchEvent: () => false,
+            createDataChannel: () => ({ close: () => {} }),
+            onicecandidate: null,
+            onicegatheringstatechange: null,
+            onsignalingstatechange: null,
+            onconnectionstatechange: null,
+            localDescription: null,
+            remoteDescription: null,
+            signalingState: 'closed',
+            iceConnectionState: 'closed',
+            connectionState: 'closed',
+            iceGatheringState: 'complete'
           };
         };
 
-        Object.defineProperties(window, {
-          'RTCPeerConnection': { value: noop, writable: false, configurable: false },
-          'webkitRTCPeerConnection': { value: noop, writable: false, configurable: false },
+        // Sobrescreve todas as variantes de RTCPeerConnection
+        Object.defineProperty(window, 'RTCPeerConnection', { 
+          value: fakeRTCPeerConnection, 
+          writable: false, 
+          configurable: false 
+        });
+        Object.defineProperty(window, 'webkitRTCPeerConnection', { 
+          value: fakeRTCPeerConnection, 
+          writable: false, 
+          configurable: false 
+        });
+        Object.defineProperty(window, 'mozRTCPeerConnection', { 
+          value: fakeRTCPeerConnection, 
+          writable: false, 
+          configurable: false 
         });
 
+        // Bloqueia RTCDataChannel
+        Object.defineProperty(window, 'RTCDataChannel', { 
+          value: function() { return {}; }, 
+          writable: false, 
+          configurable: false 
+        });
+
+        // Bloqueia RTCSessionDescription
+        Object.defineProperty(window, 'RTCSessionDescription', { 
+          value: function() { return {}; }, 
+          writable: false, 
+          configurable: false 
+        });
+
+        // Bloqueia RTCIceCandidate
+        Object.defineProperty(window, 'RTCIceCandidate', { 
+          value: function() { return {}; }, 
+          writable: false, 
+          configurable: false 
+        });
+
+        // Bloqueia MediaDevices
         if (navigator.mediaDevices) {
-          navigator.mediaDevices.getUserMedia = () => Promise.reject(new Error('Media access denied'));
-          navigator.mediaDevices.enumerateDevices = () => Promise.resolve([]);
+          Object.defineProperty(navigator.mediaDevices, 'getUserMedia', {
+            value: () => Promise.reject(new Error('Media access denied')),
+            writable: false,
+            configurable: false
+          });
+          Object.defineProperty(navigator.mediaDevices, 'enumerateDevices', {
+            value: () => Promise.resolve([]),
+            writable: false,
+            configurable: false
+          });
+          Object.defineProperty(navigator.mediaDevices, 'getDisplayMedia', {
+            value: () => Promise.reject(new Error('Screen capture denied')),
+            writable: false,
+            configurable: false
+          });
         }
+
+        // Bloqueia getUserMedia antigo
+        if (navigator.getUserMedia) {
+          navigator.getUserMedia = function() {
+            arguments[arguments.length - 1](new Error('Media access denied'));
+          };
+        }
+        if (navigator.webkitGetUserMedia) {
+          navigator.webkitGetUserMedia = function() {
+            arguments[arguments.length - 1](new Error('Media access denied'));
+          };
+        }
+
       } catch (e) { }
 
       // NAVIGATOR SPOOFING
