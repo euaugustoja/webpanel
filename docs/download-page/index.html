@@ -662,6 +662,181 @@
         align-items: flex-start;
         gap: 8px;
       }
+
+      /* Tutorial Section */
+      .tutorial-section {
+        background: var(--bg-card);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        padding: 50px;
+        margin: 60px auto;
+        max-width: 900px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .tutorial-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d9ff 0%, #7c3aed 50%, #00d9ff 100%);
+      }
+
+      .tutorial-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 10px;
+        background: var(--gradient-1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .tutorial-subtitle {
+        text-align: center;
+        color: var(--text-secondary);
+        font-size: 1rem;
+        margin-bottom: 40px;
+      }
+
+      .tutorial-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      .tutorial-step {
+        display: flex;
+        gap: 25px;
+        align-items: flex-start;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 25px;
+        transition: all 0.3s ease;
+      }
+
+      .tutorial-step:hover {
+        border-color: rgba(0, 217, 255, 0.3);
+        transform: translateX(5px);
+      }
+
+      .step-number {
+        flex-shrink: 0;
+        width: 50px;
+        height: 50px;
+        background: var(--gradient-1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+        box-shadow: 0 5px 20px rgba(0, 217, 255, 0.3);
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .step-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: var(--text-primary);
+      }
+
+      .step-desc {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 15px;
+      }
+
+      .step-desc strong {
+        color: var(--primary);
+      }
+
+      .step-image {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .step-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+
+      .step-image:hover img {
+        transform: scale(1.02);
+      }
+
+      .tutorial-success {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-radius: 12px;
+        padding: 20px 30px;
+        margin-top: 30px;
+      }
+
+      .success-icon {
+        font-size: 2rem;
+      }
+
+      .tutorial-success p {
+        color: #22c55e;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      /* Responsive Tutorial */
+      @media (max-width: 768px) {
+        .tutorial-section {
+          padding: 30px 20px;
+          margin: 40px auto;
+        }
+
+        .tutorial-title {
+          font-size: 1.4rem;
+        }
+
+        .tutorial-step {
+          flex-direction: column;
+          gap: 15px;
+          padding: 20px;
+        }
+
+        .step-number {
+          width: 40px;
+          height: 40px;
+          font-size: 1.2rem;
+        }
+
+        .step-title {
+          font-size: 1.1rem;
+        }
+
+        .tutorial-success {
+          flex-direction: column;
+          text-align: center;
+          gap: 10px;
+        }
+      }
     </style>
   </head>
   <body>
@@ -742,6 +917,55 @@
           >
             <span>🐧</span> Linux (Em breve)
           </span>
+        </div>
+      </div>
+
+      <!-- Tutorial Section -->
+      <div class="tutorial-section">
+        <h2 class="tutorial-title">📖 Como fazer login após instalar</h2>
+        <p class="tutorial-subtitle">Siga estes 3 passos simples para começar a usar o Ferramentas Guru</p>
+        
+        <div class="tutorial-steps">
+          <!-- Passo 1 -->
+          <div class="tutorial-step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+              <h3 class="step-title">Faça login com suas credenciais</h3>
+              <p class="step-desc">Após instalar o aplicativo, esta tela de login irá aparecer. Coloque seu <strong>login</strong> que nossa equipe enviou para você.</p>
+              <div class="step-image">
+                <img src="https://i.postimg.cc/d0DPgf5S/screenshot-229.png" alt="Tela de Login" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Passo 2 -->
+          <div class="tutorial-step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+              <h3 class="step-title">Insira o código de acesso</h3>
+              <p class="step-desc">Após entrar com seu login, você precisará inserir um <strong>código de acesso</strong> que será enviado para o seu email cadastrado.</p>
+              <div class="step-image">
+                <img src="https://i.postimg.cc/jSgB6XRg/screenshot-230.png" alt="Tela de Código de Acesso" loading="lazy" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Passo 3 -->
+          <div class="tutorial-step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+              <h3 class="step-title">Verifique seu email</h3>
+              <p class="step-desc">O código de acesso chegará no seu email assim. Copie o código e cole no aplicativo para começar a usar!</p>
+              <div class="step-image">
+                <img src="https://i.postimg.cc/L5pW4QVZ/screenshot-231.png" alt="Email com Código" loading="lazy" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tutorial-success">
+          <span class="success-icon">🎉</span>
+          <p>Pronto! Após inserir o código, você terá acesso completo ao Ferramentas Guru!</p>
         </div>
       </div>
 

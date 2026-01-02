@@ -5,7 +5,8 @@ import pkg from '../package.json';
 import squirrelStartup from 'electron-squirrel-startup';
 import { activeBrowsers } from './main/state';
 import { handleLaunchApp } from './main/launch-handler';
-import { verifyIntegrity, getIntegrityViolations } from './main/integrity';
+// REMOVIDO: import de integridade que bloqueava após atualizações
+// import { verifyIntegrity, getIntegrityViolations } from './main/integrity';
 import { initAutoUpdater, checkForUpdates } from './main/auto-updater';
 
 // Limite de memória para evitar OOM
@@ -62,33 +63,9 @@ const createWindow = () => {
   });
 };
 
-// Verificação de integridade no startup
+// Inicialização do app
 app.on('ready', () => {
-  // NOTA: Verificação de integridade desativada temporariamente
-  // O sistema de integridade bloqueia após atualizações pois os hashes mudam
-  // TODO: Regenerar integrity.json em cada build e incluir no instalador
-  try {
-    console.log('[START] Verificação de integridade desativada - permitindo inicialização');
-    // const isValid = verifyIntegrity();
-    // 
-    // if (!isValid) {
-    //   const violations = getIntegrityViolations();
-    //   const message = violations.length > 0
-    //     ? `Os seguintes arquivos foram modificados:\n\n• ${violations.join('\n• ')}\n\nPor segurança, a aplicação não pode ser executada.`
-    //     : 'A aplicação detectou modificações não autorizadas e não pode ser executada.';
-    //   
-    //   dialog.showErrorBox(
-    //     '⚠️ Erro de Integridade - Ferramentas Guru',
-    //     message
-    //   );
-    //   app.quit();
-    //   return;
-    // }
-  } catch (error) {
-    // Se houver erro na verificação de integridade, log e continua
-    console.error('[START] Erro na verificação de integridade:', error);
-    // Em caso de erro, permite iniciar para não bloquear o usuário
-  }
+  console.log('[START] Iniciando Ferramentas Guru...');
 
   try {
     createWindow();
