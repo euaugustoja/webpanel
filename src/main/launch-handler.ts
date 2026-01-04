@@ -268,7 +268,7 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
           const isForbidden =
             type === 'devtools' ||
             url.startsWith('devtools://') ||
-            url.startsWith('chrome://') ||
+            (url.startsWith('chrome://') && !url.startsWith('chrome://downloads')) ||
             url.startsWith('edge://');
 
           if (isForbidden) {
