@@ -1,7 +1,7 @@
 {
   "name": "ferramentas-guru",
   "productName": "Ferramentas Guru",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Ferramentas Guru - Browser Anti Detecção Multilogin",
   "main": ".vite/build/main.js",
   "scripts": {

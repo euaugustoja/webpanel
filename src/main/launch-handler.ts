@@ -317,7 +317,8 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
         'sec-ch-ua-mobile': '?0',
         'sec-ch-ua-platform': getPlatformName(),
       },
-      acceptDownloads: true
+      // Se modo 'browser', desativar interceptação do Playwright para permitir UI nativa
+      acceptDownloads: download_mode !== 'browser'
     };
     
     if (custom_user_agent && IS_DEV) {
