@@ -1067,11 +1067,7 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
 
     // DOWNLOAD HANDLER
     const setupDownloadHandler = (p: Page) => {
-      // Se modo 'browser', não interceptar downloads - deixar o Chrome gerenciar nativamente
-      if (download_mode === 'browser') {
-        if (IS_DEV) console.log('📥 [DOWNLOAD] Modo: browser (não interceptando downloads)');
-        return; // Não registra o handler - downloads ficam nativos do navegador
-      }
+
 
       p.on('download', async (download: Download) => {
         if (IS_DEV) console.log("📥 [DOWNLOAD] Arquivo:", download.suggestedFilename());
@@ -1118,9 +1114,25 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
         } else if (download_mode === 'app') {
           // Modo app: mostra diálogo do Electron para escolher onde salvar
           if (mainWindow && !mainWindow.isDestroyed()) {
+            
+            // Smart Renaming: Calcular nome de arquivo único para sugerir no diálogo
+            const baseDir = download_path || app.getPath('downloads');
+            let fileName = download.suggestedFilename();
+            let defaultSmartPath = path.join(baseDir, fileName);
+
+            if (fs.existsSync(defaultSmartPath)) {
+                const ext = path.extname(fileName);
+                const name = path.basename(fileName, ext);
+                let counter = 1;
+                while (fs.existsSync(defaultSmartPath)) {
+                    defaultSmartPath = path.join(baseDir, `${name} (${counter})${ext}`);
+                    counter++;
+                }
+            }
+
             const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
               title: 'Salvar Arquivo',
-              defaultPath: path.join(app.getPath('downloads'), download.suggestedFilename()),
+              defaultPath: defaultSmartPath,
               buttonLabel: 'Salvar',
             });
             if (!canceled && filePath) {
