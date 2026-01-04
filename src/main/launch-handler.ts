@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, shell } from 'electron';
+import { app, BrowserWindow, dialog, shell, Notification } from 'electron';
 import type { Browser, Page, Download, Frame } from 'patchright';
 import path from 'path';
 import fs from 'fs';
@@ -1128,6 +1128,15 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
                     defaultSmartPath = path.join(baseDir, `${name} (${counter})${ext}`);
                     counter++;
                 }
+            }
+
+            // Notificar usuário que o download precisa de atenção
+            if (Notification.isSupported()) {
+              new Notification({
+                title: 'Download Pronto 📥',
+                body: `O arquivo "${fileName}" está pronto. Escolha onde salvar.`,
+                silent: false
+              }).show();
             }
 
             const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
