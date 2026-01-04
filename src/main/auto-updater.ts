@@ -499,6 +499,12 @@ export async function checkForUpdates(
 
   console.log(`[AutoUpdater] Nova versão disponível: ${updateInfo.version} (prioridade: ${updateInfo.priority})`);
 
+  // Notificar o renderer (frontend) que há uma atualização
+  // Isso permite mostrar o aviso no dashboard
+  if (parentWindow) {
+    parentWindow.webContents.send('update-available', updateInfo);
+  }
+
   // Verificar se usuário pulou esta versão (só para baixa prioridade)
   if (updateInfo.priority === 'low') {
     const skippedVersions = getSkippedVersions();

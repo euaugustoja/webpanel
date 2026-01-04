@@ -31,5 +31,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   // --- WARP API ---
   getWarpStatus: () => ipcRenderer.invoke('warp:status'),
   installWarp: () => ipcRenderer.invoke('warp:install'),
-  toggleWarp: (enable: boolean) => ipcRenderer.invoke('warp:toggle', enable)
+  toggleWarp: (enable: boolean) => ipcRenderer.invoke('warp:toggle', enable),
+
+  // Auto Update
+  checkUpdate: (silent: boolean = true) => ipcRenderer.invoke('check-update', silent),
+  onUpdateAvailable: (callback: (event: any, info: any) => void) => ipcRenderer.on('update-available', callback),
 });

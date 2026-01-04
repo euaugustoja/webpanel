@@ -8,7 +8,7 @@ import { handleLaunchApp } from './main/launch-handler';
 // REMOVIDO: import de integridade que bloqueava após atualizações
 // import { verifyIntegrity, getIntegrityViolations } from './main/integrity';
 import { initAutoUpdater, checkForUpdates } from './main/auto-updater';
-import { getWarpStatus, installWarp, connectWarp, disconnectWarp } from './main/warp';
+import { getWarpStatus, installWarp } from './main/warp';
 
 // Limite de memória para evitar OOM
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
@@ -138,5 +138,12 @@ ipcMain.handle('warp:install', async () => {
 
 ipcMain.handle('warp:toggle', async (_, enable: boolean) => {
   return await warpInfo.toggleWarp(enable);
+});
+
+// Checar atualizações (acionado pelo front)
+ipcMain.handle('check-update', async (_, silent = true) => {
+  if (mainWindow) {
+    checkForUpdates(pkg.version, mainWindow, silent); 
+  }
 });
 
