@@ -96,6 +96,9 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
       selected_scripts_content = [],
       selected_element_rules_content = [],
       blocked_links = [],
+      // Configurações de download
+      download_mode = 'auto',
+      download_path = '',
     } = args;
 
     const normalizeInput = (input: any): string[] => {
@@ -1063,22 +1066,74 @@ export const handleLaunchApp = async (event: Electron.IpcMainInvokeEvent, args: 
 
     // DOWNLOAD HANDLER
     const setupDownloadHandler = (p: Page) => {
+      // Se modo 'browser', não interceptar downloads - deixar o Chrome gerenciar nativamente
+      if (download_mode === 'browser') {
+        if (IS_DEV) console.log('📥 [DOWNLOAD] Modo: browser (não interceptando downloads)');
+        return; // Não registra o handler - downloads ficam nativos do navegador
+      }
+
       p.on('download', async (download: Download) => {
-        if (IS_DEV) console.log("📥 Download:", download.suggestedFilename());
-        if (mainWindow && !mainWindow.isDestroyed()) {
-          const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
-            title: 'Salvar Arquivo',
-            defaultPath: path.join(app.getPath('downloads'), download.suggestedFilename()),
-            buttonLabel: 'Salvar',
-          });
-          if (!canceled && filePath) {
-            await download.saveAs(filePath).catch(() => { });
-          } else {
-            await download.cancel().catch(() => { });
+        if (IS_DEV) console.log("📥 [DOWNLOAD] Arquivo:", download.suggestedFilename());
+        
+        if (download_mode === 'auto') {
+          // Modo automático: salva direto na pasta configurada
+          const downloadDir = download_path || app.getPath('downloads');
+          let fileName = download.suggestedFilename();
+          let filePath = path.join(downloadDir, fileName);
+
+          // Lógica de renomeação "Smart" estilo Windows (Evitar sobrescrever)
+          // Se o arquivo já existir, adiciona (1), (2), etc.
+          if (fs.existsSync(filePath)) {
+            const ext = path.extname(fileName);
+            const name = path.basename(fileName, ext);
+            let counter = 1;
+            
+            while (fs.existsSync(filePath)) {
+               const newName = `${name} (${counter})${ext}`;
+               filePath = path.join(downloadDir, newName);
+               counter++;
+            }
           }
-        } else {
-          const defaultPath = path.join(app.getPath('downloads'), download.suggestedFilename());
-          await download.saveAs(defaultPath).catch(() => { });
+          
+          // Criar pasta se não existir
+          if (!fs.existsSync(downloadDir)) {
+            try {
+              fs.mkdirSync(downloadDir, { recursive: true });
+              if (IS_DEV) console.log(`📁 [DOWNLOAD] Pasta criada: ${downloadDir}`);
+            } catch (e) {
+              if (IS_DEV) console.error('❌ [DOWNLOAD] Erro ao criar pasta:', e);
+              // Fallback para pasta Downloads padrão
+              const fallbackPath = path.join(app.getPath('downloads'), download.suggestedFilename());
+              await download.saveAs(fallbackPath).catch(() => { });
+              return;
+            }
+          }
+          
+          await download.saveAs(filePath).catch((e) => {
+            if (IS_DEV) console.error('❌ [DOWNLOAD] Erro ao salvar:', e);
+          });
+          if (IS_DEV) console.log(`✅ [DOWNLOAD] Salvo em: ${filePath}`);
+          
+        } else if (download_mode === 'app') {
+          // Modo app: mostra diálogo do Electron para escolher onde salvar
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
+              title: 'Salvar Arquivo',
+              defaultPath: path.join(app.getPath('downloads'), download.suggestedFilename()),
+              buttonLabel: 'Salvar',
+            });
+            if (!canceled && filePath) {
+              await download.saveAs(filePath).catch(() => { });
+              if (IS_DEV) console.log(`✅ [DOWNLOAD] Salvo em: ${filePath}`);
+            } else {
+              await download.cancel().catch(() => { });
+              if (IS_DEV) console.log('❌ [DOWNLOAD] Cancelado pelo usuário');
+            }
+          } else {
+            // Fallback se janela não disponível
+            const defaultPath = path.join(app.getPath('downloads'), download.suggestedFilename());
+            await download.saveAs(defaultPath).catch(() => { });
+          }
         }
       });
     };

@@ -23,5 +23,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     ipcRenderer.on('session-expired', callback),
 
   // Abre a pasta do download
-  openDownloadFolder: (path: string) => ipcRenderer.invoke('downloads:open-folder', path)
+  openDownloadFolder: (path: string) => ipcRenderer.invoke('downloads:open-folder', path),
+
+  // Seleciona uma pasta (para configuração de download)
+  selectFolder: () => ipcRenderer.invoke('select-folder')
 });

@@ -108,6 +108,18 @@ ipcMain.handle('apps:kill-all', async () => {
   return true;
 });
 
+
 ipcMain.handle('downloads:open-folder', async (event, filePath) => { 
   if (filePath) shell.showItemInFolder(filePath); 
 });
+
+// Selecionar pasta para downloads
+ipcMain.handle('select-folder', async () => {
+  if (!mainWindow) return null;
+  const result = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openDirectory'],
+    title: 'Selecionar Pasta de Downloads',
+  });
+  return result.canceled ? null : result.filePaths[0];
+});
+
