@@ -9,7 +9,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 
 // Caminho padrão do executável no Windows
 const WARP_CLI_PATH = 'C:\\Program Files\\Cloudflare\\Cloudflare WARP\\warp-cli.exe';
-const WARP_INSTALLER_URL = 'https://1.1.1.1/Cloudflare_WARP_Release-x64.msi';
+const WARP_INSTALLER_URL = 'https://1111-releases.cloudflareclient.com/windows/Cloudflare_WARP_Release-x64.msi';
 
 export const checkWarpInstalled = (): boolean => {
   return fs.existsSync(WARP_CLI_PATH);
@@ -87,21 +87,25 @@ export const installWarp = async (): Promise<boolean> => {
     return false;
   }
 
-  // 2. Install (Silent)
-  // msiexec /i "path" /qn /norestart
+  // 2. Install (Elevated via PowerShell)
+  // Requer privilégios de administrador para instalar drivers de rede
   return new Promise((resolve) => {
-    const installCmd = `msiexec /i "${installerPath}" /qn /norestart ACCEPT_TOS="yes"`;
+    console.log('[WARP] Solicitando permissão de administrador...');
     
-    exec(installCmd, (error, stdout, stderr) => {
+    // Usar PowerShell para elevar privilégios (UAC)
+    const installArgs = `/i "${installerPath}" /qn /norestart ACCEPT_TOS=yes`;
+    const psCommand = `Start-Process msiexec -ArgumentList '${installArgs}' -Verb RunAs -Wait`;
+    
+    exec(`powershell "${psCommand}"`, (error, stdout, stderr) => {
       if (error) {
-        console.error('[WARP] Erro na instalação:', error);
+        console.error('[WARP] Erro na instalação (Elevação):', error);
+        // Código 1603 geralmente é acesso negado ou falha fatal
         resolve(false);
       } else {
-        console.log('[WARP] Instalação finalizada com sucesso (teoricamente).');
+        console.log('[WARP] Instalação finalizada (via PowerShell).');
         
         // Aguardar um pouco para o serviço subir
         setTimeout(async () => {
-             // Tentar registrar após instalar
              await registerWarp();
              resolve(true);
         }, 5000);
