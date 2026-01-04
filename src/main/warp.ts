@@ -48,24 +48,38 @@ export const installWarp = async (): Promise<boolean> => {
   const tempDir = app.getPath('temp');
   const installerPath = path.join(tempDir, 'Cloudflare_WARP.msi');
 
-  // 1. Download
+  // 1. Download with Redirect Support
   try {
     await new Promise<void>((resolve, reject) => {
-      const file = fs.createWriteStream(installerPath);
-      https.get(WARP_INSTALLER_URL, (response) => {
-        if (response.statusCode !== 200) {
-          reject(new Error(`Falha no download: Status ${response.statusCode}`));
-          return;
-        }
-        response.pipe(file);
-        file.on('finish', () => {
-          file.close();
-          resolve();
+      const downloadFile = (url: string) => {
+        https.get(url, (response) => {
+          // Handle Redirects
+          if (response.statusCode === 301 || response.statusCode === 302) {
+            if (response.headers.location) {
+              console.log(`[WARP] Redirecionando para: ${response.headers.location}`);
+              downloadFile(response.headers.location);
+              return;
+            }
+          }
+
+          if (response.statusCode !== 200) {
+            reject(new Error(`Falha no download: Status ${response.statusCode}`));
+            return;
+          }
+
+          const file = fs.createWriteStream(installerPath);
+          response.pipe(file);
+          file.on('finish', () => {
+            file.close();
+            resolve();
+          });
+        }).on('error', (err) => {
+          fs.unlink(installerPath, () => {});
+          reject(err);
         });
-      }).on('error', (err) => {
-        fs.unlink(installerPath, () => {});
-        reject(err);
-      });
+      };
+
+      downloadFile(WARP_INSTALLER_URL);
     });
     console.log('[WARP] Download concluído:', installerPath);
   } catch (e) {
