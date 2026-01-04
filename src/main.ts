@@ -8,12 +8,16 @@ import { handleLaunchApp } from './main/launch-handler';
 // REMOVIDO: import de integridade que bloqueava após atualizações
 // import { verifyIntegrity, getIntegrityViolations } from './main/integrity';
 import { initAutoUpdater, checkForUpdates } from './main/auto-updater';
+import { getWarpStatus, installWarp, connectWarp, disconnectWarp } from './main/warp';
 
 // Limite de memória para evitar OOM
 app.commandLine.appendSwitch('js-flags', '--max-old-space-size=4096');
 app.commandLine.appendSwitch('disable-webrtc');
 app.commandLine.appendSwitch('disable-features', 'WebRTC');
 app.commandLine.appendSwitch('force-webrtc-ip-handling-policy', 'disable_non_proxied_udp');
+
+import * as warpInfo from './main/warp';
+
 
 if (squirrelStartup) {
   app.quit();
@@ -121,5 +125,18 @@ ipcMain.handle('select-folder', async () => {
     title: 'Selecionar Pasta de Downloads',
   });
   return result.canceled ? null : result.filePaths[0];
+});
+
+// --- CLOUDFLARE WARP HANDLERS ---
+ipcMain.handle('warp:status', async () => {
+  return await warpInfo.getWarpStatus();
+});
+
+ipcMain.handle('warp:install', async () => {
+  return await warpInfo.installWarp();
+});
+
+ipcMain.handle('warp:toggle', async (_, enable: boolean) => {
+  return await warpInfo.toggleWarp(enable);
 });
 

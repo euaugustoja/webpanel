@@ -26,5 +26,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openDownloadFolder: (path: string) => ipcRenderer.invoke('downloads:open-folder', path),
 
   // Seleciona uma pasta (para configuração de download)
-  selectFolder: () => ipcRenderer.invoke('select-folder')
+  selectFolder: () => ipcRenderer.invoke('select-folder'),
+
+  // --- WARP API ---
+  getWarpStatus: () => ipcRenderer.invoke('warp:status'),
+  installWarp: () => ipcRenderer.invoke('warp:install'),
+  toggleWarp: (enable: boolean) => ipcRenderer.invoke('warp:toggle', enable)
 });
