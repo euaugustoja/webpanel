@@ -1233,7 +1233,7 @@
               <span style="background: var(--gradient-1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">1</span>
               <strong style="color: #fff; font-size: 1rem;">Baixe o instalador</strong>
             </div>
-            <a href="https://membros.ferramentasguru.com/admin/download.php?file=ferramentasguru_macos_m_instalador.command&dir=multilogin" class="modal-btn" download style="margin-top: 5px;">
+            <a href="https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command" class="modal-btn" download style="margin-top: 5px;">
               ⬇️ Baixar Instalador Automático
             </a>
           </div>
@@ -1318,11 +1318,11 @@
             <div style="padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
               <p class="modal-text">Se o instalador automático não funcionar, siga estes passos:</p>
               <p class="modal-text"><strong>1.</strong> Baixe o arquivo ZIP:</p>
-              <a href="https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.4-mac.zip" class="modal-btn modal-btn-secondary" download>
+              <a href="https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.13-mac.zip" class="modal-btn modal-btn-secondary" download>
                 📦 Baixar ZIP Manual
               </a>
               <p class="modal-text" style="margin-top: 15px;"><strong>2.</strong> Coloque o arquivo na pasta Downloads e execute este comando no Terminal:</p>
-              <div class="modal-code">xattr -cr ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\ Guru.app /Applications/ && open /Applications/Ferramentas\ Guru.app</div>
+              <div class="modal-code">xattr -cr ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\ Guru.app /Applications/ && open /Applications/Ferramentas\ Guru.app</div>
               <button class="copy-btn" onclick="copyCommand()">📋 Copiar Comando</button>
             </div>
           </div>
@@ -1339,12 +1339,12 @@
       // CONFIGURAÇÃO - EDITE AQUI
       // ========================================
       const CONFIG = {
-        version: "1.0.4",
+        version: "1.0.13",
         downloads: {
           windows:
-            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.4.exe",
-          mac: "https://membros.ferramentasguru.com/admin/download.php?file=ferramentasguru_macos_m_instalador.command&dir=multilogin",
-          "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.4-mac-intel.zip",
+            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.13.exe",
+          mac: "https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command",
+          "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.13-mac-intel.zip",
           linux: null, // Em breve
         },
         sizes: {
@@ -1366,7 +1366,7 @@
       }
 
       function copyCommand() {
-        const command = 'xattr -cr ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.4-mac/Ferramentas\\ Guru.app /Applications/ && open /Applications/Ferramentas\\ Guru.app';
+        const command = 'xattr -cr ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\\ Guru.app /Applications/ && open /Applications/Ferramentas\\ Guru.app';
         navigator.clipboard.writeText(command).then(() => {
           const btn = document.querySelector('.accordion-content .copy-btn');
           btn.textContent = '✅ Copiado!';
