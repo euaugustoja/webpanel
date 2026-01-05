@@ -70,6 +70,29 @@ jobs:
           echo "Looking for files in out/make..."
           ls -R out/make || echo "Folder not found"
 
+      - name: Rename Artifacts
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "Version: $VERSION"
+
+          # Windows
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            find out/make -name "*.exe" -not -name "RELEASES" -exec mv "{}" "out/make/Ferramentas-Guru-$VERSION.exe" \;
+          fi
+
+          # macOS ARM
+          if [[ "${{ matrix.name }}" == "macOS ARM" ]]; then
+             find out/make -name "*.zip" -exec mv "{}" "out/make/Ferramentas-Guru-$VERSION-mac.zip" \;
+             find out/make -name "*.dmg" -exec mv "{}" "out/make/Ferramentas-Guru-$VERSION-mac.dmg" \;
+          fi
+
+          # macOS Intel
+          if [[ "${{ matrix.name }}" == "macOS Intel" ]]; then
+             find out/make -name "*.zip" -exec mv "{}" "out/make/Ferramentas-Guru-$VERSION-mac-intel.zip" \;
+             find out/make -name "*.dmg" -exec mv "{}" "out/make/Ferramentas-Guru-$VERSION-mac-intel.dmg" \;
+          fi
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:

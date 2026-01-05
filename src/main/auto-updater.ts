@@ -336,94 +336,17 @@ async function showDownloadProgress(
 }
 
 /**
- * Desinstala a versão atual do aplicativo
- */
-async function uninstallCurrentVersion(): Promise<boolean> {
-  console.log('[AutoUpdater] Iniciando desinstalação da versão atual...');
-  
-  try {
-    // Caminho do desinstalador do Squirrel
-    const appLocalPath = path.join(os.homedir(), 'AppData', 'Local', 'ferramentas_guru');
-    const updateExe = path.join(appLocalPath, 'Update.exe');
-    
-    if (!fs.existsSync(updateExe)) {
-      console.log('[AutoUpdater] Update.exe não encontrado, pulando desinstalação');
-      return true; // Continua mesmo sem desinstalador
-    }
-    
-    // Executar desinstalação silenciosa
-    const { execSync } = require('child_process');
-    
-    // Fechar todos os processos do app antes
-    try {
-      execSync('taskkill /F /IM "ferramentas-guru.exe" /T', { stdio: 'ignore' });
-    } catch (e) {
-      // Ignora se não conseguir fechar (pode não estar rodando)
-    }
-    
-    // Aguardar um pouco
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    // Limpar pastas de versões antigas
-    const appFolders = fs.readdirSync(appLocalPath).filter(f => f.startsWith('app-'));
-    for (const folder of appFolders) {
-      const folderPath = path.join(appLocalPath, folder);
-      try {
-        fs.rmSync(folderPath, { recursive: true, force: true });
-        console.log(`[AutoUpdater] Removida pasta: ${folder}`);
-      } catch (e) {
-        console.log(`[AutoUpdater] Não foi possível remover: ${folder}`);
-      }
-    }
-    
-    // Limpar arquivos de integridade que possam estar causando problemas
-    const integrityFiles = ['integrity.json', '.integrity'];
-    for (const file of integrityFiles) {
-      const filePath = path.join(appLocalPath, file);
-      if (fs.existsSync(filePath)) {
-        fs.unlinkSync(filePath);
-        console.log(`[AutoUpdater] Removido: ${file}`);
-      }
-    }
-    
-    console.log('[AutoUpdater] Desinstalação concluída com sucesso');
-    return true;
-  } catch (error) {
-    console.error('[AutoUpdater] Erro na desinstalação:', error);
-    return false; // Continua mesmo com erro
-  }
-}
-
-/**
- * Instala a atualização baixada (com desinstalação prévia)
+ * Instala a atualização baixada
  */
 async function installUpdate(filePath: string): Promise<void> {
-  console.log('[AutoUpdater] Preparando instalação:', filePath);
-  
-  // Mostrar mensagem para o usuário
-  const result = await dialog.showMessageBox({
-    type: 'info',
-    title: '🔄 Instalando Atualização',
-    message: 'Para garantir uma instalação limpa, o aplicativo irá:\n\n1. Fechar a versão atual\n2. Limpar arquivos antigos\n3. Abrir o instalador da nova versão\n\nClique em "Instalar" quando a janela do instalador aparecer.',
-    buttons: ['Continuar', 'Cancelar'],
-    defaultId: 0,
-    cancelId: 1,
-  });
-  
-  if (result.response === 1) {
-    console.log('[AutoUpdater] Usuário cancelou a instalação');
-    return;
-  }
-  
-  // Desinstalar versão atual (limpar arquivos antigos)
-  await uninstallCurrentVersion();
+  console.log('[AutoUpdater] Iniciando instalação:', filePath);
   
   // Abrir o instalador
-  console.log('[AutoUpdater] Abrindo instalador:', filePath);
+  console.log('[AutoUpdater] Abrindo instalador...');
   shell.openPath(filePath);
   
-  // Aguardar um pouco para o instalador iniciar
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  // Aguardar um pouco para o instalador iniciar antes de fechar o app
+  await new Promise(resolve => setTimeout(resolve, 3000));
   
   // Fechar o aplicativo para permitir a atualização
   app.quit();

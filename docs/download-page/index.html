@@ -1214,122 +1214,38 @@
       </footer>
     </div>
 
-    <!-- Modal para macOS Apple Silicon -->
-    <div class="modal-overlay" id="mac-modal">
-      <div class="modal">
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+    <!-- Windows Warning Modal -->
+    <div class="modal-overlay" id="windows-modal">
+      <div class="modal" style="max-width: 700px; border-color: rgba(0, 217, 255, 0.3);">
+        <button class="modal-close" onclick="closeWindowsModal()">&times;</button>
         
-        <h3 class="modal-title">🍎 Instalação macOS (Apple Silicon)</h3>
+        <h3 class="modal-title" style="color: #00d9ff;">📋 Instruções de Instalação</h3>
         
-        <!-- Opção 1: Instalador Automático com instruções detalhadas -->
-        <div class="modal-section" style="border: 2px solid rgba(0, 217, 255, 0.4); background: rgba(0, 217, 255, 0.08);">
-          <h4 class="modal-section-title" style="color: #00d9ff; font-size: 1.1rem;">
-            📥 Opção 1: Instalador Automático (Recomendado)
-          </h4>
-          
-          <!-- Passo 1: Download -->
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-              <span style="background: var(--gradient-1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">1</span>
-              <strong style="color: #fff; font-size: 1rem;">Baixe o instalador</strong>
-            </div>
-            <a href="https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command" class="modal-btn" download style="margin-top: 5px;">
-              ⬇️ Baixar Instalador Automático
-            </a>
-          </div>
-          
-          <!-- Aviso importante -->
-          <div style="background: rgba(255, 193, 7, 0.15); border: 1px solid rgba(255, 193, 7, 0.4); border-radius: 10px; padding: 12px 15px; margin-bottom: 15px;">
-            <p style="color: #ffc107; font-size: 0.9rem; margin: 0; display: flex; align-items: center; gap: 8px;">
-              ⚠️ <strong>IMPORTANTE:</strong> Deixe o arquivo na pasta Downloads!
-            </p>
-          </div>
-          
-          <!-- Passo 2: Abrir Terminal -->
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-              <span style="background: var(--gradient-1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">2</span>
-              <strong style="color: #fff; font-size: 1rem;">Abra o Terminal e digite os comandos:</strong>
-            </div>
-            
-            <!-- Comando 1 -->
-            <div style="margin-bottom: 12px;">
-              <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 5px;"><strong style="color: #00d9ff;">COMANDO 01:</strong> Navegue até Downloads</p>
-              <div class="modal-code" id="cmd1" style="font-size: 0.85rem;">cd ~/Downloads</div>
-              <button class="copy-btn" onclick="copyCmd('cd ~/Downloads', this)" style="margin-top: 8px;">📋 Copiar</button>
-              <span style="color: var(--text-secondary); font-size: 0.8rem; margin-left: 10px;">→ Aperte Enter</span>
-            </div>
-            
-            <!-- Comando 2 -->
-            <div>
-              <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 5px;"><strong style="color: #00d9ff;">COMANDO 02:</strong> Libere o instalador</p>
-              <div class="modal-code" id="cmd2" style="font-size: 0.85rem;">chmod +x ferramentasguru_macos_m_instalador.command</div>
-              <button class="copy-btn" onclick="copyCmd(`chmod +x ferramentasguru_macos_m_instalador.command`, this)" style="margin-top: 8px;">📋 Copiar</button>
-              <span style="color: var(--text-secondary); font-size: 0.8rem; margin-left: 10px;">→ Aperte Enter</span>
+        <div class="modal-section" style="background: rgba(0, 217, 255, 0.05); border: 1px solid rgba(0, 217, 255, 0.2);">
+          <p class="modal-text" style="font-size: 1rem; color: #e0faff;">
+            Para garantir a segurança do seu dispositivo, o Windows pode exibir uma verificação padrão. Siga os 2 passos simples abaixo para concluir a instalação do nosso aplicativo seguro.
+          </p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+          <div>
+            <p style="color: var(--primary); font-weight: 700; margin-bottom: 10px; font-size: 0.9rem;">PASSO 1: CLIQUE EM "MAIS INFORMAÇÕES"</p>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+              <img src="https://i.postimg.cc/8sQWC555/screenshot-250.png" alt="Passo 1" style="width: 100%; height: auto; display: block;">
             </div>
           </div>
-          
-          <!-- Passo 3: Executar -->
-          <div style="background: rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 15px;">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 10px;">
-              <span style="background: var(--gradient-1); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.9rem;">3</span>
-              <strong style="color: #fff; font-size: 1rem;">Sem fechar o Terminal, execute o arquivo:</strong>
+          <div>
+            <p style="color: var(--primary); font-weight: 700; margin-bottom: 10px; font-size: 0.9rem;">PASSO 2: CLIQUE EM "EXECUTAR MESMO ASSIM"</p>
+            <div style="border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
+              <img src="https://i.postimg.cc/mrXmgYGy/screenshot-251.png" alt="Passo 2" style="width: 100%; height: auto; display: block;">
             </div>
-            <p style="color: var(--text-secondary); font-size: 0.9rem; margin: 0;">
-              Clique duas vezes no arquivo <strong style="color: #00d9ff;">ferramentasguru_macos_m_instalador.command</strong> na pasta Downloads.
-            </p>
-          </div>
-          
-          <!-- Sucesso -->
-          <div style="background: rgba(34, 197, 94, 0.15); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 10px; padding: 12px 15px;">
-            <p style="color: #22c55e; font-size: 0.9rem; margin: 0; display: flex; align-items: center; gap: 8px;">
-              ✅ <strong>Pronto!</strong> Dessa forma o macOS libera o instalador corretamente!
-            </p>
-          </div>
-          
-          <!-- Imagem ilustrativa -->
-          <div style="margin-top: 15px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1);">
-            <img src="https://i.postimg.cc/xjPKj15R/screenshot-242.png" alt="Terminal macOS" style="width: 100%; height: auto; display: block;" />
           </div>
         </div>
-        
-        <!-- Opção 2: Instalação Manual (Accordion) -->
-        <div class="modal-section" style="padding: 0; overflow: hidden;">
-          <button onclick="toggleAccordion(this)" style="
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: none;
-            padding: 20px;
-            text-align: left;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: background 0.3s ease;
-          ">
-            <span style="display: flex; align-items: center; gap: 10px;">
-              <span style="font-size: 1.2rem;">🔧</span>
-              <span style="color: var(--text-primary); font-weight: 600; font-size: 1rem;">Opção 2: Instalação Manual</span>
-            </span>
-            <span class="accordion-icon" style="color: var(--text-secondary); font-size: 1.2rem; transition: transform 0.3s ease;">▼</span>
+
+        <div style="margin-top: 30px; text-align: center;">
+          <button onclick="closeWindowsModal()" class="modal-btn">
+            Entendi, Baixar Agora!
           </button>
-          
-          <div class="accordion-content" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
-            <div style="padding: 20px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-              <p class="modal-text">Se o instalador automático não funcionar, siga estes passos:</p>
-              <p class="modal-text"><strong>1.</strong> Baixe o arquivo ZIP:</p>
-              <a href="https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.13-mac.zip" class="modal-btn modal-btn-secondary" download>
-                📦 Baixar ZIP Manual
-              </a>
-              <p class="modal-text" style="margin-top: 15px;"><strong>2.</strong> Coloque o arquivo na pasta Downloads e execute este comando no Terminal:</p>
-              <div class="modal-code">xattr -cr ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\ Guru.app && mv ~/Downloads/Ferramentas-Guru-1.0.13-mac/Ferramentas\ Guru.app /Applications/ && open /Applications/Ferramentas\ Guru.app</div>
-              <button class="copy-btn" onclick="copyCommand()">📋 Copiar Comando</button>
-            </div>
-          </div>
-        </div>
-        
-        <div class="warning-box">
-          <p>⚠️ <strong>Importante:</strong> Se aparecer uma mensagem de segurança, vá em Configurações do Sistema → Privacidade e Segurança → e clique em "Abrir Mesmo Assim".</p>
         </div>
       </div>
     </div>
@@ -1342,7 +1258,7 @@
         version: "1.0.13",
         downloads: {
           windows:
-            "https://membros.ferramentasguru.com/updates/Ferramentas Guru-1.0.13.exe",
+            "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.13.exe",
           mac: "https://membros.ferramentasguru.com/updates/ferramentasguru-macos-m-instalador.command",
           "mac-intel": "https://membros.ferramentasguru.com/updates/Ferramentas-Guru-1.0.13-mac-intel.zip",
           linux: null, // Em breve
@@ -1350,19 +1266,41 @@
         sizes: {
           windows: "~150 MB",
           mac: "~2 KB (Instalador)",
-          "mac-intel": "~160 MB",
+          "mac-intel": "~357 MB",
           linux: "Em breve",
         },
       };
-      // ========================================
 
-      // Funções do Modal
+      // Funções do Modal macOS
       function showMacInstallerPopup() {
         document.getElementById('mac-modal').classList.add('active');
+        downloadMacCommand();
+      }
+      
+      function downloadMacCommand() {
+         const link = document.createElement('a');
+         link.href = CONFIG.downloads.mac;
+         // Forçar nome para garantir .command
+         const fileName = 'ferramentasguru-macos-m-instalador.command';
+         link.setAttribute('download', fileName);
+         document.body.appendChild(link);
+         link.click();
+         document.body.removeChild(link);
       }
 
       function closeModal() {
         document.getElementById('mac-modal').classList.remove('active');
+      }
+
+      // Funções do Modal Windows
+      function showWindowsModal() {
+        document.getElementById('windows-modal').classList.add('active');
+      }
+
+      function closeWindowsModal() {
+        document.getElementById('windows-modal').classList.remove('active');
+        // Iniciar download após fechar ou clicar no botão do modal
+        window.location.href = CONFIG.downloads.windows;
       }
 
       function copyCommand() {
@@ -1376,7 +1314,6 @@
         });
       }
 
-      // Função para copiar comandos individuais
       function copyCmd(command, btn) {
         navigator.clipboard.writeText(command).then(() => {
           const originalText = btn.textContent;
@@ -1387,7 +1324,6 @@
         });
       }
 
-      // Função do Accordion
       function toggleAccordion(button) {
         const content = button.nextElementSibling;
         const icon = button.querySelector('.accordion-icon');
@@ -1403,70 +1339,130 @@
 
       // Fechar modal ao clicar fora
       document.getElementById('mac-modal').addEventListener('click', function(e) {
-        if (e.target === this) {
-          closeModal();
-        }
+        if (e.target === this) closeModal();
+      });
+      document.getElementById('windows-modal').addEventListener('click', function(e) {
+        if (e.target === this) document.getElementById('windows-modal').classList.remove('active');
       });
 
-      // Detectar sistema operacional
+      // Detectar sistema operacional (Melhorado)
       function detectOS() {
-        const userAgent = navigator.userAgent.toLowerCase();
-        const platform = navigator.platform.toLowerCase();
+        try {
+            const userAgent = (navigator.userAgent || "").toLowerCase();
+            const platform = (navigator.platform || "").toLowerCase();
 
-        if (platform.includes("win") || userAgent.includes("windows")) {
-          return "windows";
-        } else if (platform.includes("mac") || userAgent.includes("mac")) {
-          return "mac";
-        } else if (platform.includes("linux") || userAgent.includes("linux")) {
-          return "linux";
+            if (platform.includes("mac") || userAgent.includes("mac")) {
+            return "mac";
+            } 
+            if (platform.includes("win") || userAgent.includes("win")) {
+            return "windows";
+            }
+            if (platform.includes("linux") || userAgent.includes("linux")) {
+            return "linux";
+            }
+            
+            // Fallback básico
+            if (/android/.test(userAgent)) return "linux"; 
+            if (/iphone|ipad|ipod/.test(userAgent)) return "mac";
+        } catch (e) {
+            console.error("Erro na detecção de SO:", e);
         }
-        return "windows"; // Default
+        
+        return "windows"; // Fallback seguro
       }
 
-      // Atualizar UI baseado no OS
+      // Atualizar UI
       function updateUI(os) {
-        const osNames = {
-          windows: "Windows Detectado",
-          mac: "macOS Detectado",
-          linux: "Linux Detectado",
-        };
+        try {
+            const osNames = {
+            windows: "Windows Detectado",
+            mac: "macOS Detectado",
+            linux: "Linux Detectado",
+            };
 
-        const osIcons = {
-          windows: "🪟",
-          mac: "🍎",
-          linux: "🐧",
-        };
+            const osIcons = {
+            windows: "🪟",
+            mac: "🍎",
+            linux: "🐧",
+            };
 
-        const downloadTexts = {
-          windows: "Baixar para Windows",
-          mac: "Baixar para macOS",
-          linux: "Baixar para Linux",
-        };
+            const downloadTexts = {
+            windows: "Baixar para Windows",
+            mac: "Baixar para macOS",
+            linux: "Baixar para Linux",
+            };
 
-        // Atualizar elementos
-        document.getElementById("os-name").textContent = osNames[os];
-        document.getElementById("os-icon").textContent = osIcons[os];
-        document.getElementById("download-text").textContent =
-          downloadTexts[os];
-        document.getElementById("download-btn").href = CONFIG.downloads[os];
-        document.getElementById("version").textContent = "v" + CONFIG.version;
-        document.getElementById("file-size").textContent = CONFIG.sizes[os];
+            const nameEl = document.getElementById("os-name");
+            const iconEl = document.getElementById("os-icon");
+            const textEl = document.getElementById("download-text");
+            const btn = document.getElementById("download-btn");
+            const versionEl = document.getElementById("version");
+            const sizeEl = document.getElementById("file-size");
 
-        // Destacar botão do OS atual
-        document.querySelectorAll(".other-btn").forEach((btn) => {
-          btn.style.opacity = "0.6";
-        });
-        document.getElementById("btn-" + os).style.opacity = "1";
-        document.getElementById("btn-" + os).style.borderColor =
-          "rgba(0, 217, 255, 0.5)";
+            if (nameEl) nameEl.textContent = osNames[os];
+            if (iconEl) iconEl.textContent = osIcons[os];
+            if (textEl) textEl.textContent = downloadTexts[os];
+            if (versionEl) versionEl.textContent = "v" + CONFIG.version;
+            if (sizeEl) sizeEl.textContent = CONFIG.sizes[os];
+
+            // Resetar botão para evitar ouvintes duplicados se chamado múltiplas vezes
+            if (btn) {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+
+                if (os === 'windows') {
+                    newBtn.href = "#";
+                    newBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showWindowsModal();
+                    });
+                } else if (os === 'mac') {
+                    newBtn.href = "#";
+                    newBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showMacInstallerPopup();
+                    });
+                } else {
+                    newBtn.href = CONFIG.downloads[os] || "#";
+                    // Se não tiver link (ex: linux), pode querer avisar ou deixar sem ação
+                    if (!CONFIG.downloads[os]) {
+                        newBtn.style.opacity = "0.5";
+                        newBtn.style.cursor = "not-allowed";
+                    }
+                }
+            }
+
+            // Destacar botões secundários
+            document.querySelectorAll(".other-btn").forEach((b) => {
+            b.style.opacity = "0.6";
+            b.style.borderColor = "rgba(255, 255, 255, 0.1)";
+            });
+            const currentBtn = document.getElementById("btn-" + os);
+            if (currentBtn) {
+                currentBtn.style.opacity = "1";
+                currentBtn.style.borderColor = "rgba(0, 217, 255, 0.5)";
+            }
+        } catch (e) {
+            console.error("Erro ao atualizar UI:", e);
+        }
       }
 
-      // Download para OS específico
+      // Função chamada pelos botões secundários
       function downloadFor(os) {
-        window.location.href = CONFIG.downloads[os];
+         try {
+            // Se for Windows/Mac via botão secundário, usaremos a mesma lógica
+            if (os === 'windows') {
+                showWindowsModal();
+            } else if (os === 'mac') {
+                showMacInstallerPopup();
+            } else if (CONFIG.downloads[os]) {
+                window.location.href = CONFIG.downloads[os];
+            }
+         } catch (e) {
+             console.error("Erro no download:", e);
+         }
       }
 
-      // Buscar versão do servidor (opcional)
       async function fetchLatestVersion() {
         try {
           const response = await fetch(
@@ -1474,30 +1470,35 @@
           );
           if (response.ok) {
             const data = await response.json();
-            CONFIG.version = data.version;
+            if (data.version) CONFIG.version = data.version;
             if (data.downloads) {
-              if (data.downloads.windows) CONFIG.downloads.windows = data.downloads.windows;
-              if (data.downloads.mac) CONFIG.downloads.mac = data.downloads.mac;
-              if (data.downloads.linux) CONFIG.downloads.linux = data.downloads.linux;
+                if(data.downloads.windows) CONFIG.downloads.windows = data.downloads.windows;
+                if(data.downloads['mac-intel']) CONFIG.downloads['mac-intel'] = data.downloads['mac-intel'];
+                // mac usa link do command fixo geralmente, mas se vier no JSON:
+                // if(data.downloads.mac) CONFIG.downloads.mac = data.downloads.mac;
             }
-            document.getElementById("version").textContent =
-              "v" + CONFIG.version;
-            // Atualizar o link do botão principal
-            const detectedOS = detectOS();
-            if (CONFIG.downloads[detectedOS]) {
-              document.getElementById("download-btn").href = CONFIG.downloads[detectedOS];
-            }
+            
+            // Re-atualiza a UI com os novos dados
+            // Só chama updateUI se detectOS não tiver falhado, ou passa um padrão
+            const currentOS = detectOS();
+            updateUI(currentOS);
           }
         } catch (e) {
-          console.log("Using default version");
+          console.log("Using default version", e);
         }
       }
 
       // Inicialização
       document.addEventListener("DOMContentLoaded", () => {
-        const detectedOS = detectOS();
-        updateUI(detectedOS);
-        fetchLatestVersion();
+        try {
+            const os = detectOS();
+            updateUI(os);
+            fetchLatestVersion();
+        } catch (e) {
+            console.error("Erro fatal na inicialização:", e);
+            // Em ultimo caso, tenta forçar windows se tudo falhar
+            try { updateUI("windows"); } catch(e2) {}
+        }
       });
     </script>
   </body>
